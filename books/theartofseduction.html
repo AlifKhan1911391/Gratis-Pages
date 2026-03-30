@@ -3,17 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Bookify</title>
+  <title>Gratis Pages</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 
   <style>
+    /* ════════════════════════════════════════
+       CSS VARIABLES
+    ════════════════════════════════════════ */
     :root {
       --bg:         #0c0d16;
-      --bg-panel:   #13141f;
-      --bg-panel-h: #191b2a;
+      --bg-card:    #13141f;
+      --bg-card-h:  #191b2a;
       --border:     rgba(255,255,255,0.07);
       --gold:       #e8a838;
       --gold-dim:   rgba(232,168,56,0.12);
@@ -27,6 +30,9 @@
       --t:          0.35s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
+    /* ════════════════════════════════════════
+       RESET
+    ════════════════════════════════════════ */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
 
@@ -51,13 +57,16 @@
       z-index: 0;
     }
 
+    /* ════════════════════════════════════════
+       HEADER
+    ════════════════════════════════════════ */
     header {
       position: sticky;
       top: 0;
       z-index: 100;
-      background: rgba(12,13,22,0.85);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
+      background: rgba(12,13,22,0.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--border);
     }
 
@@ -65,7 +74,7 @@
       max-width: 1100px;
       margin: 0 auto;
       padding: 0 2rem;
-      height: 68px;
+      height: 70px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -73,27 +82,27 @@
 
     .logo-wrap {
       display: flex;
-      align-items: center;
-      gap: 0.7rem;
+      align-items: baseline;
       text-decoration: none;
     }
 
-    .logo-img {
-      width: 34px;
-      height: 34px;
-      object-fit: contain;
-      border-radius: 8px;
-    }
-
-    .logo-text {
+    .logo-gratis {
       font-family: var(--serif);
-      font-size: 1.45rem;
+      font-size: 1.55rem;
       font-weight: 700;
       color: var(--cream);
-      letter-spacing: -0.02em;
+      letter-spacing: -0.03em;
     }
 
-    .logo-text span { color: var(--gold); }
+    .logo-pages {
+      font-family: var(--serif);
+      font-size: 1.55rem;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--gold);
+      letter-spacing: -0.02em;
+      margin-left: 0.3rem;
+    }
 
     .back-btn {
       display: flex;
@@ -107,9 +116,12 @@
     }
 
     .back-btn:hover { color: var(--gold); }
+    .back-btn svg   { transition: transform var(--t); }
     .back-btn:hover svg { transform: translateX(-3px); }
-    .back-btn svg { transition: transform var(--t); }
 
+    /* ════════════════════════════════════════
+       PAGE LAYOUT
+    ════════════════════════════════════════ */
     .page-wrap {
       position: relative;
       z-index: 1;
@@ -126,6 +138,9 @@
       animation: fadeIn 0.8s ease both;
     }
 
+    /* ════════════════════════════════════════
+       COVER COLUMN
+    ════════════════════════════════════════ */
     .cover-col {
       position: sticky;
       top: 90px;
@@ -137,7 +152,7 @@
       box-shadow:
         0 30px 80px rgba(0,0,0,0.6),
         0 0 0 1px var(--border),
-        0 0 60px rgba(232,168,56,0.15);
+        0 0 60px rgba(232,168,56,0.12);
       aspect-ratio: 2 / 3;
       background: #1a1b28;
       position: relative;
@@ -150,6 +165,7 @@
       display: block;
     }
 
+    /* Gold spine accent */
     .cover-frame::before {
       content: '';
       position: absolute;
@@ -157,7 +173,7 @@
       top: 0;
       bottom: 0;
       width: 4px;
-      background: linear-gradient(to bottom, var(--gold), rgba(232,168,56,0.3));
+      background: linear-gradient(to bottom, var(--gold), rgba(232,168,56,0.2));
       border-radius: 4px 0 0 4px;
       z-index: 1;
     }
@@ -183,10 +199,12 @@
       border-radius: 100px;
     }
 
+    /* ════════════════════════════════════════
+       INFO COLUMN
+    ════════════════════════════════════════ */
     .info-col {
       display: flex;
       flex-direction: column;
-      gap: 0;
     }
 
     .genre-tag {
@@ -225,6 +243,7 @@
       margin-bottom: 2.5rem;
     }
 
+    /* Stats */
     .stats-row {
       display: flex;
       gap: 2.5rem;
@@ -248,14 +267,7 @@
       color: var(--cream);
     }
 
-    .book-desc {
-      font-size: 0.95rem;
-      line-height: 1.8;
-      color: var(--muted);
-      max-width: 560px;
-      margin-bottom: 3rem;
-    }
-
+    /* CTA Button */
     .btn-read {
       display: inline-flex;
       align-items: center;
@@ -272,6 +284,7 @@
       transition: var(--t);
       position: relative;
       overflow: hidden;
+      align-self: flex-start;
     }
 
     .btn-read::before {
@@ -289,10 +302,13 @@
     }
 
     .btn-read:hover::before { opacity: 1; }
-    .btn-read:active { transform: translateY(0); }
-    .btn-read svg { flex-shrink: 0; transition: transform var(--t); }
-    .btn-read:hover svg { transform: translateX(3px); }
+    .btn-read:active         { transform: translateY(0); }
+    .btn-read svg            { flex-shrink: 0; transition: transform var(--t); }
+    .btn-read:hover svg      { transform: translateX(3px); }
 
+    /* ════════════════════════════════════════
+       FOOTER
+    ════════════════════════════════════════ */
     footer {
       position: relative;
       z-index: 1;
@@ -302,29 +318,39 @@
     }
 
     .footer-text { font-size: 0.8rem; color: var(--muted); }
-    .footer-text strong { color: var(--gold); font-family: var(--serif); }
+    .footer-brand { font-family: var(--serif); font-weight: 700; color: var(--cream); }
+    .footer-brand span { font-style: italic; color: var(--gold); font-weight: 400; }
 
+    /* ════════════════════════════════════════
+       ANIMATION
+    ════════════════════════════════════════ */
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(24px); }
       to   { opacity: 1; transform: translateY(0); }
     }
 
+    /* ════════════════════════════════════════
+       RESPONSIVE
+    ════════════════════════════════════════ */
     @media (max-width: 768px) {
       .book-layout { grid-template-columns: 1fr; gap: 2.5rem; }
-      .cover-col { position: static; max-width: 240px; margin: 0 auto; }
-      .page-wrap { padding: 2.5rem 1.25rem 4rem; }
-      .stats-row { gap: 1.5rem; flex-wrap: wrap; }
+      .cover-col   { position: static; max-width: 240px; margin: 0 auto; }
+      .page-wrap   { padding: 2.5rem 1.25rem 4rem; }
+      .stats-row   { gap: 1.5rem; flex-wrap: wrap; }
+      .btn-read    { align-self: stretch; justify-content: center; }
     }
   </style>
 </head>
 <body>
 
+  <!-- ══════════════════════════════════════
+       HEADER
+  ══════════════════════════════════════ -->
   <header>
     <div class="nav-inner">
       <a class="logo-wrap" href="../index.html">
-        <img class="logo-img" src="../logo.png" alt="Bookify"
-             onerror="this.style.display='none'"/>
-        <span class="logo-text">Book<span>ify</span></span>
+        <span class="logo-gratis">Gratis</span>
+        <span class="logo-pages">Pages</span>
       </a>
       <a class="back-btn" href="../index.html">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -336,24 +362,29 @@
     </div>
   </header>
 
+  <!-- ══════════════════════════════════════
+       MAIN
+  ══════════════════════════════════════ -->
   <main class="page-wrap">
     <div class="book-layout">
 
+      <!-- Cover -->
       <div class="cover-col">
         <div class="cover-frame">
           <img id="bookCover" src="" alt="Book cover"
-               onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'280\\' height=\\'420\\' viewBox=\\'0 0 280 420\\'%3E%3Crect fill=\\'%231a1b28\\' width=\\'280\\' height=\\'420\\'/%3E%3Ctext x=\\'50%25\\' y=\\'50%25\\' fill=\\'%238a8fa8\\' font-family=\\'serif\\' font-size=\\'16\\' text-anchor=\\'middle\\' dy=\\'.35em\\'%3ENo Cover%3C/text%3E%3C/svg%3E'"/>
+               onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'280\' height=\'420\' viewBox=\'0 0 280 420\'%3E%3Crect fill=\'%231a1b28\' width=\'280\' height=\'420\'/%3E%3Ctext x=\'50%25\' y=\'50%25\' fill=\'%238a8fa8\' font-family=\'serif\' font-size=\'16\' text-anchor=\'middle\' dy=\'.35em\'%3ENo Cover%3C/text%3E%3C/svg%3E'"/>
         </div>
         <div class="badge-wrap">
           <span class="badge">
-            <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor">
-              <circle cx="5" cy="5" r="5"/>
+            <svg width="7" height="7" viewBox="0 0 7 7" fill="currentColor">
+              <circle cx="3.5" cy="3.5" r="3.5"/>
             </svg>
             Free PDF
           </span>
         </div>
       </div>
 
+      <!-- Info -->
       <div class="info-col">
         <span class="genre-tag" id="bookGenre"></span>
         <h1 class="book-title" id="bookTitle"></h1>
@@ -389,20 +420,22 @@
     </div>
   </main>
 
+  <!-- ══════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════ -->
   <footer>
     <p class="footer-text">
-      &copy; 2025 <strong>Bookify</strong> — Free books for curious minds.
+      &copy; 2025
+      <span class="footer-brand">Gratis<span>Pages</span></span>
+      &mdash; Free books for curious minds.
     </p>
   </footer>
 
-
-  <!-- ══════════════════ BOOK DATA ══════════════════ -->
+  <!-- ══════════════════════════════════════
+       BOOK DATA — Edit only this object
+  ══════════════════════════════════════ -->
   <script>
-    /**
-     * bookData — edit ONLY this object to update page content.
-     * All other HTML is a shared template.
-     */
-    const bookData = {
+    var bookData = {
       title:  "The Art of Seduction",
       author: "Robert Greene",
       cover:  "../covers/book3.png",
@@ -410,13 +443,12 @@
       pdf:    "https://irp-cdn.multiscreensite.com/cb9165b2/files/uploaded/The+48+Laws+Of+Power.pdf"
     };
 
-    /* ── Inject content ── */
-    document.title                                    = `${bookData.title} — Bookify`;
+    document.title                                    = bookData.title + " — Gratis Pages";
     document.getElementById('bookTitle').textContent  = bookData.title;
     document.getElementById('bookAuthor').textContent = bookData.author;
-    document.getElementById('bookCover').src          = bookData.cover;
-    document.getElementById('bookCover').alt          = `${bookData.title} cover`;
     document.getElementById('bookGenre').textContent  = bookData.genre;
+    document.getElementById('bookCover').src          = bookData.cover;
+    document.getElementById('bookCover').alt          = bookData.title + " cover";
     document.getElementById('pdfBtn').href            = bookData.pdf;
   </script>
 
