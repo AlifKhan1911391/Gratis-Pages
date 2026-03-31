@@ -1,0 +1,3 @@
+[build]
+  command = "sed -i \"s|__GH_TOKEN__|$GH_PAT|g\" admin.html"
+  publish = "."

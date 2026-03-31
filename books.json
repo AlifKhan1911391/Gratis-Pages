@@ -1,0 +1,50 @@
+[
+  {
+    "name": "Rich Dad Poor Dad",
+    "photo": "covers/book1.png",
+    "author": "Robert Kiyosaki",
+    "genre": "Finance",
+    "slug": "richdadpoordad",
+    "pdfUrl": "https://dn721905.ca.archive.org/0/items/rich-dad-poor-dad_bongotweet/rich-dad-poor-dad.pdf"
+  },
+  {
+    "name": "The 48 Laws of Power",
+    "photo": "covers/book2.png",
+    "author": "Robert Greene",
+    "genre": "Self-Help",
+    "slug": "the48lawsofpower",
+    "pdfUrl": "https://irp-cdn.multiscreensite.com/cb9165b2/files/uploaded/The+48+Laws+Of+Power.pdf"
+  },
+  {
+    "name": "The Art of Seduction",
+    "photo": "covers/book3.png",
+    "author": "Robert Greene",
+    "genre": "Psychology",
+    "slug": "theartofseduction",
+    "pdfUrl": "https://irp-cdn.multiscreensite.com/cb9165b2/files/uploaded/The+48+Laws+Of+Power.pdf"
+  },
+  {
+    "name": "Think and Grow Rich",
+    "photo": "covers/images (2).jpeg",
+    "author": "Napoleon Hill",
+    "genre": "Self-Help",
+    "slug": "thinkandgrowrich",
+    "pdfUrl": "https://oracleapex.com/apex/wwv_flow_file_mgr.get_file?p_debug=0&p_flow_id=101&p_instance=10311512421443&p_fname=Think-And-Grow-Rich_2011-06.pdf"
+  },
+  {
+    "name": "VOIDBORNE: Chronicles of the Shattered Sky",
+    "photo": "covers/cover.png",
+    "author": "Mahadi Islam Alif",
+    "genre": "Manga",
+    "slug": "voidborne",
+    "pdfUrl": "https://blazemanga.netlify.app"
+  },
+  {
+    "name": "Atomic Habits",
+    "photo": "covers/book1.png",
+    "author": "James Clear",
+    "genre": "Self-Help",
+    "slug": "atomichabits",
+    "pdfUrl": "https://dn790007.ca.archive.org/0/items/atomic-habits-pdfdrive/Atomic%20habits%20%28%20PDFDrive%20%29.pdf"
+  }
+]

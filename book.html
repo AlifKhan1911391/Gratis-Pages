@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <!-- SEO tags — filled by JS for direct visitors.
+       For full Google indexing, admin panel generates
+       static books/[slug].html with these hardcoded.     -->
+  <title>Free Book — Gratis Pages</title>
+  <meta name="description" content="Read and download this free book on Gratis Pages — your free PDF library." />
+  <meta name="robots" content="noindex, follow" /><!-- static pages get index, this fallback stays noindex -->
+  <link rel="canonical" id="metaCanonical" href="https://gratispages.netlify.app/" />
+
+  <meta property="og:type" content="book" />
+  <meta property="og:site_name" content="Gratis Pages" />
+  <meta property="og:url" id="metaOgUrl" content="https://gratispages.netlify.app/" />
+  <meta property="og:title" id="metaOgTitle" content="Free Book — Gratis Pages" />
+  <meta property="og:description" id="metaOgDesc" content="Read and download this free book on Gratis Pages." />
+  <meta property="og:image" id="metaOgImage" content="" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" id="metaTwTitle" content="Free Book — Gratis Pages" />
+  <meta name="twitter:description" id="metaTwDesc" content="Read and download this free book on Gratis Pages." />
+  <meta name="twitter:image" id="metaTwImage" content="" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+
+  <style>
+    :root {
+      --bg:       #0c0d16;
+      --bg-card:  #13141f;
+      --border:   rgba(255,255,255,0.07);
+      --gold:     #e8a838;
+      --gold-dim: rgba(232,168,56,0.12);
+      --gold-glow:rgba(232,168,56,0.4);
+      --cream:    #f0ead8;
+      --muted:    #8a8fa8;
+      --text:     #dde1f0;
+      --serif:    'Playfair Display', Georgia, serif;
+      --sans:     'DM Sans', sans-serif;
+      --radius:   16px;
+      --t:        0.35s cubic-bezier(0.22,1,0.36,1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: -20%; left: 50%;
+      transform: translateX(-50%);
+      width: 800px; height: 500px;
+      background: radial-gradient(ellipse, rgba(232,168,56,0.07) 0%, transparent 70%);
+      pointer-events: none; z-index: 0;
+    }
+
+    /* HEADER */
+    header {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(12,13,22,0.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-inner {
+      max-width: 1100px; margin: 0 auto;
+      padding: 0 2rem; height: 70px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+
+    .logo-wrap { display: flex; align-items: baseline; text-decoration: none; }
+
+    .logo-gratis {
+      font-family: var(--serif); font-size: 1.55rem;
+      font-weight: 700; color: var(--cream); letter-spacing: -0.03em;
+    }
+
+    .logo-pages {
+      font-family: var(--serif); font-size: 1.55rem;
+      font-weight: 400; font-style: italic;
+      color: var(--gold); letter-spacing: -0.02em; margin-left: 0.3rem;
+    }
+
+    .back-btn {
+      display: flex; align-items: center; gap: 0.5rem;
+      text-decoration: none; color: var(--muted);
+      font-size: 0.83rem; font-weight: 500; transition: color var(--t);
+    }
+
+    .back-btn:hover { color: var(--gold); }
+    .back-btn svg   { transition: transform var(--t); }
+    .back-btn:hover svg { transform: translateX(-3px); }
+
+    /* STATES */
+    .state-wrap {
+      position: relative; z-index: 1;
+      max-width: 1100px; margin: 0 auto;
+      padding: 6rem 2rem; text-align: center;
+    }
+
+    .state-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+
+    .state-title {
+      font-family: var(--serif); font-size: 1.3rem;
+      color: var(--cream); margin-bottom: 0.5rem;
+    }
+
+    .state-sub { font-size: 0.85rem; color: var(--muted); }
+
+    .spinner {
+      width: 36px; height: 36px; margin: 0 auto 1.5rem;
+      border: 2px solid var(--border);
+      border-top-color: var(--gold);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* PAGE LAYOUT */
+    .page-wrap {
+      position: relative; z-index: 1;
+      max-width: 1100px; margin: 0 auto;
+      padding: 4rem 2rem 6rem;
+    }
+
+    .book-layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 4rem; align-items: start;
+      animation: fadeIn 0.8s ease both;
+    }
+
+    /* COVER COLUMN */
+    .cover-col { position: sticky; top: 90px; }
+
+    .cover-frame {
+      border-radius: var(--radius); overflow: hidden;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 0 1px var(--border), 0 0 60px rgba(232,168,56,0.12);
+      aspect-ratio: 2/3; background: #1a1b28; position: relative;
+    }
+
+    .cover-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .cover-frame::before {
+      content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px;
+      background: linear-gradient(to bottom, var(--gold), rgba(232,168,56,0.2));
+      border-radius: 4px 0 0 4px; z-index: 1;
+    }
+
+    .badge-wrap { margin-top: 1rem; display: flex; justify-content: center; }
+
+    .badge {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      background: var(--gold-dim); border: 1px solid rgba(232,168,56,0.25);
+      color: var(--gold); font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 0.35rem 0.85rem; border-radius: 100px;
+    }
+
+    /* INFO COLUMN */
+    .info-col { display: flex; flex-direction: column; }
+
+    .genre-tag {
+      display: inline-block; font-size: 0.7rem; font-weight: 500;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 1rem;
+    }
+
+    .book-title {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 700; color: var(--cream);
+      line-height: 1.1; letter-spacing: -0.025em; margin-bottom: 0.75rem;
+    }
+
+    .book-author {
+      font-size: 1rem; color: var(--muted);
+      font-weight: 400; margin-bottom: 2.5rem;
+    }
+
+    .book-author strong { color: var(--text); font-weight: 500; }
+
+    .divider { width: 100%; height: 1px; background: var(--border); margin-bottom: 2.5rem; }
+
+    .stats-row { display: flex; gap: 2.5rem; margin-bottom: 2.5rem; flex-wrap: wrap; }
+
+    .stat { display: flex; flex-direction: column; gap: 0.25rem; }
+
+    .stat-label {
+      font-size: 0.68rem; font-weight: 500;
+      letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted);
+    }
+
+    .stat-value {
+      font-family: var(--serif); font-size: 1.05rem;
+      font-weight: 600; color: var(--cream);
+    }
+
+    .btn-read {
+      display: inline-flex; align-items: center; gap: 0.7rem;
+      background: var(--gold); color: #0c0d16;
+      font-family: var(--sans); font-size: 0.9rem; font-weight: 700;
+      letter-spacing: 0.04em; padding: 0.9rem 2rem;
+      border-radius: 10px; text-decoration: none;
+      transition: var(--t); position: relative; overflow: hidden;
+      align-self: flex-start;
+    }
+
+    .btn-read::before {
+      content: ''; position: absolute; inset: 0;
+      background: rgba(255,255,255,0.12); opacity: 0; transition: var(--t);
+    }
+
+    .btn-read:hover { transform: translateY(-2px); box-shadow: 0 12px 40px var(--gold-glow); }
+    .btn-read:hover::before { opacity: 1; }
+    .btn-read svg { flex-shrink: 0; transition: transform var(--t); }
+    .btn-read:hover svg { transform: translateX(3px); }
+
+    /* FOOTER */
+    footer {
+      position: relative; z-index: 1;
+      border-top: 1px solid var(--border);
+      padding: 2rem; text-align: center;
+    }
+
+    .footer-text { font-size: 0.8rem; color: var(--muted); }
+    .footer-brand { font-family: var(--serif); font-weight: 700; color: var(--cream); }
+    .footer-brand span { font-style: italic; color: var(--gold); font-weight: 400; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      .book-layout { grid-template-columns: 1fr; gap: 2.5rem; }
+      .cover-col   { position: static; max-width: 240px; margin: 0 auto; }
+      .page-wrap   { padding: 2.5rem 1.25rem 4rem; }
+      .stats-row   { gap: 1.5rem; }
+      .btn-read    { align-self: stretch; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="nav-inner">
+      <a class="logo-wrap" href="/">
+        <span class="logo-gratis">Gratis</span>
+        <span class="logo-pages">Pages</span>
+      </a>
+      <a class="back-btn" href="/">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Back to Library
+      </a>
+    </div>
+  </header>
+
+  <!-- LOADING STATE -->
+  <div id="stateLoading" class="state-wrap">
+    <div class="spinner"></div>
+    <p class="state-sub">Loading book…</p>
+  </div>
+
+  <!-- NOT FOUND STATE -->
+  <div id="stateNotFound" class="state-wrap" style="display:none">
+    <div class="state-icon">📚</div>
+    <div class="state-title">Book not found</div>
+    <p class="state-sub">This book doesn't exist in the library.<br><a href="/" style="color:var(--gold)">Browse all books →</a></p>
+  </div>
+
+  <!-- BOOK CONTENT -->
+  <main id="bookContent" class="page-wrap" style="display:none">
+    <div class="book-layout">
+
+      <div class="cover-col">
+        <div class="cover-frame">
+          <img id="bookCover" src="" alt="Book cover"
+               onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22280%22 height=%22420%22%3E%3Crect fill=%22%231a1b28%22 width=%22280%22 height=%22420%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 fill=%22%238a8fa8%22 font-family=%22serif%22 font-size=%2216%22 text-anchor=%22middle%22 dy=%22.35em%22%3ENo Cover%3C/text%3E%3C/svg%3E'"/>
+        </div>
+        <div class="badge-wrap">
+          <span class="badge">
+            <svg width="7" height="7" viewBox="0 0 7 7" fill="currentColor"><circle cx="3.5" cy="3.5" r="3.5"/></svg>
+            Free
+          </span>
+        </div>
+      </div>
+
+      <div class="info-col">
+        <span class="genre-tag" id="bookGenre"></span>
+        <h1 class="book-title" id="bookTitle">—</h1>
+        <p class="book-author">by <strong id="bookAuthor">—</strong></p>
+        <div class="divider"></div>
+        <div class="stats-row">
+          <div class="stat">
+            <span class="stat-label">Format</span>
+            <span class="stat-value" id="bookFormat">PDF</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">Access</span>
+            <span class="stat-value">Instant</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">Cost</span>
+            <span class="stat-value">Free</span>
+          </div>
+        </div>
+        <a class="btn-read" id="pdfBtn" href="#" target="_blank" rel="noopener noreferrer">
+          Read Now
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    <p class="footer-text">
+      &copy; 2026
+      <span class="footer-brand">Gratis<span>Pages</span></span>
+      &mdash; Free books for curious minds.
+    </p>
+  </footer>
+
+  <script>
+    var DOMAIN = "https://gratispages.netlify.app";
+
+    function setMeta(id, attr, val) {
+      var el = document.getElementById(id);
+      if (el) el.setAttribute(attr, val);
+    }
+
+    /* ─── Read slug from URL ─── */
+    var params = new URLSearchParams(window.location.search);
+    var slug   = params.get("slug") || "";
+
+    if (!slug) {
+      document.getElementById("stateLoading").style.display  = "none";
+      document.getElementById("stateNotFound").style.display = "block";
+    } else {
+      fetch("/books.json?v=" + Date.now())
+        .then(function(r) { return r.json(); })
+        .then(function(books) {
+          var book = books.find(function(b) { return b.slug === slug; });
+
+          document.getElementById("stateLoading").style.display = "none";
+
+          if (!book) {
+            document.getElementById("stateNotFound").style.display = "block";
+            return;
+          }
+
+          /* ── populate page content ── */
+          var pageTitle = book.name + " by " + book.author + " \u2014 Free PDF | Gratis Pages";
+          var pageDesc  = "Read and download " + book.name + " by " + book.author +
+                          " for free" + (book.genre ? " (" + book.genre + ")" : "") +
+                          ". Instant access on Gratis Pages \u2014 your free PDF library.";
+          var pageUrl   = DOMAIN + "/book.html?slug=" + slug;
+          var coverAbs  = DOMAIN + "/" + (book.photo || "covers/cover.png");
+
+          document.title = pageTitle;
+
+          document.getElementById("bookTitle").textContent  = book.name;
+          document.getElementById("bookAuthor").textContent = book.author || "Unknown";
+          document.getElementById("bookGenre").textContent  = book.genre  || "";
+          document.getElementById("bookCover").src          = "/" + book.photo;
+          document.getElementById("bookCover").alt          = book.name + " cover";
+
+          /* ── fill meta tags for social sharing ── */
+          setMeta("metaCanonical",  "href",    pageUrl);
+          setMeta("metaOgUrl",      "content", pageUrl);
+          setMeta("metaOgTitle",    "content", book.name + " by " + book.author + " \u2014 Free PDF");
+          setMeta("metaOgDesc",     "content", pageDesc);
+          setMeta("metaOgImage",    "content", coverAbs);
+          setMeta("metaTwTitle",    "content", book.name + " by " + book.author + " \u2014 Free PDF");
+          setMeta("metaTwDesc",     "content", pageDesc);
+          setMeta("metaTwImage",    "content", coverAbs);
+
+          /* ── PDF button ── */
+          var pdfBtn = document.getElementById("pdfBtn");
+          var url    = book.pdfUrl || "";
+          if (url) {
+            if (url.startsWith("http")) {
+              pdfBtn.href   = url;
+              pdfBtn.target = "_blank";
+              pdfBtn.innerHTML = 'Read PDF <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+              document.getElementById("bookFormat").textContent = "Link";
+            } else {
+              pdfBtn.href   = "/" + url;
+              pdfBtn.target = "_blank";
+              pdfBtn.innerHTML = 'Open PDF <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+              document.getElementById("bookFormat").textContent = "PDF";
+            }
+          } else {
+            pdfBtn.style.display = "none";
+          }
+
+          document.getElementById("bookContent").style.display = "block";
+        })
+        .catch(function() {
+          document.getElementById("stateLoading").style.display  = "none";
+          document.getElementById("stateNotFound").style.display = "block";
+        });
+    }
+  </script>
+
+</body>
+</html>
