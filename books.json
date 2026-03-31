@@ -70,5 +70,13 @@
     "genre": "Self-Help",
     "slug": "deep-work",
     "pdfUrl": "https://cpcglobal.org/publications/Deep%20Work.pdf"
+  },
+  {
+    "name": "The Power of Now: A Guide to Spiritual Enlightenment",
+    "photo": "covers/the-power-of-now-a-guide-to-spiritual-enlightenment-1774952569910.jpg",
+    "author": "Eckhart Tolle",
+    "genre": "Self-Help",
+    "slug": "the-power-of-now-a-guide-to-spiritual-enlightenment",
+    "pdfUrl": "https://dn790003.ca.archive.org/0/items/ThePowerOfNowEckhartTolle_201806/The%20Power%20Of%20Now%20-%20Eckhart%20Tolle.pdf"
   }
 ]
