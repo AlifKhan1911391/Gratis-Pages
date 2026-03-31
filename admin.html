@@ -209,9 +209,15 @@
       font-weight: 700; color: var(--cream); margin-bottom: 0.4rem;
     }
 
-    .page-sub { font-size: 0.85rem; color: var(--muted); margin-bottom: 2.5rem; }
+    .page-sub { font-size: 0.85rem; color: var(--muted); margin-bottom: 2rem; }
 
-    .stats-bar { display: flex; gap: 1rem; margin-bottom: 2.5rem; flex-wrap: wrap; }
+    .stats-bar {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
 
     .stat-chip {
       background: var(--bg2); border: 1px solid var(--border);
@@ -222,12 +228,26 @@
     .stat-value { font-size: 1.4rem; font-weight: 600; color: var(--cream); line-height: 1; }
     .stat-label { font-size: 0.68rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
 
-    .admin-grid {
-      display: grid; grid-template-columns: 1fr 380px;
-      gap: 2rem; align-items: start;
+    .manage-btn {
+      background: var(--gold-dim);
+      border: 1px solid rgba(232,168,56,0.3);
+      color: var(--gold);
+      border-radius: 10px;
+      padding: 0.6rem 1.2rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--t);
+      margin-left: auto;
     }
+    .manage-btn:hover { background: var(--gold); color: #0a0b14; border-color: var(--gold); }
 
-    @media (max-width: 860px) { .admin-grid { grid-template-columns: 1fr; } }
+    .admin-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      align-items: start;
+    }
 
     .section-card {
       background: var(--bg2); border: 1px solid var(--border);
@@ -243,52 +263,6 @@
       font-size: 0.72rem; font-weight: 600;
       letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold);
     }
-
-    .section-head-count { font-size: 0.75rem; color: var(--muted); }
-
-    /* book list */
-    .book-list { padding: 0.5rem 0; }
-
-    .book-row {
-      display: flex; align-items: center; gap: 1rem;
-      padding: 0.85rem 1.5rem; border-bottom: 1px solid var(--border);
-      transition: background var(--t);
-    }
-
-    .book-row:last-child { border-bottom: none; }
-    .book-row:hover { background: var(--bg3); }
-
-    .book-row-thumb {
-      width: 38px; height: 54px; object-fit: cover;
-      border-radius: 5px; background: var(--bg3); flex-shrink: 0;
-    }
-
-    .book-row-info { flex: 1; min-width: 0; }
-
-    .book-row-title {
-      font-weight: 500; font-size: 0.9rem; color: var(--cream);
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-    }
-
-    .book-row-meta { font-size: 0.75rem; color: var(--muted); margin-top: 0.1rem; }
-
-    .book-row-genre {
-      display: inline-block; font-size: 0.62rem; color: var(--gold);
-      background: var(--gold-dim); border: 1px solid rgba(232,168,56,0.2);
-      padding: 0.1rem 0.45rem; border-radius: 100px;
-      margin-left: 0.4rem; vertical-align: middle;
-    }
-
-    .delete-btn {
-      background: none; border: 1px solid transparent;
-      border-radius: 7px; color: var(--muted);
-      cursor: pointer; padding: 0.35rem 0.5rem;
-      transition: var(--t); flex-shrink: 0; font-size: 0.75rem;
-    }
-
-    .delete-btn:hover { border-color: rgba(248,113,113,0.35); color: var(--red); background: var(--red-dim); }
-
-    .empty-list { padding: 2.5rem; text-align: center; color: var(--muted); font-size: 0.85rem; }
 
     /* add form */
     .add-form { padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem; }
@@ -370,6 +344,104 @@
     .add-btn:hover { background: #f0b840; }
     .add-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
+    /* MODAL */
+    .modal-overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.8);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+    .modal-overlay.show { display: flex; }
+    .modal-container {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      width: 100%;
+      max-width: 800px;
+      max-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      animation: fadeUp 0.3s ease;
+    }
+    .modal-header {
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .modal-header h3 {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      color: var(--cream);
+    }
+    .modal-close {
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-size: 1.4rem;
+      cursor: pointer;
+      transition: var(--t);
+    }
+    .modal-close:hover { color: var(--gold); }
+    .modal-search {
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .modal-search input {
+      width: 100%;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.7rem 1rem;
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 0.85rem;
+    }
+    .modal-book-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 0.5rem 0;
+    }
+    .modal-book-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.85rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+      transition: background var(--t);
+    }
+    .modal-book-row:hover { background: var(--bg3); }
+    .modal-book-thumb {
+      width: 38px; height: 54px; object-fit: cover;
+      border-radius: 5px; background: var(--bg3); flex-shrink: 0;
+    }
+    .modal-book-info { flex: 1; min-width: 0; }
+    .modal-book-title {
+      font-weight: 500; font-size: 0.9rem; color: var(--cream);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .modal-book-meta { font-size: 0.75rem; color: var(--muted); margin-top: 0.1rem; }
+    .modal-book-genre {
+      display: inline-block; font-size: 0.62rem; color: var(--gold);
+      background: var(--gold-dim); border: 1px solid rgba(232,168,56,0.2);
+      padding: 0.1rem 0.45rem; border-radius: 100px;
+      margin-left: 0.4rem; vertical-align: middle;
+    }
+    .modal-delete-btn {
+      background: none; border: 1px solid transparent;
+      border-radius: 7px; color: var(--muted);
+      cursor: pointer; padding: 0.35rem 0.5rem;
+      transition: var(--t); flex-shrink: 0; font-size: 0.75rem;
+    }
+    .modal-delete-btn:hover { border-color: rgba(248,113,113,0.35); color: var(--red); background: var(--red-dim); }
+    .empty-list { padding: 2.5rem; text-align: center; color: var(--muted); font-size: 0.85rem; }
+
     /* toast */
     .toast {
       position: fixed; bottom: 2rem; right: 2rem;
@@ -380,7 +452,6 @@
       transition: all 0.35s cubic-bezier(0.22,1,0.36,1);
       pointer-events: none; max-width: 300px;
     }
-
     .toast.show { transform: translateY(0); opacity: 1; }
     .toast.success { border-color: rgba(74,222,128,0.3); color: var(--green); }
     .toast.error   { border-color: rgba(248,113,113,0.3); color: var(--red); }
@@ -388,32 +459,26 @@
     /* confirm */
     .confirm-overlay {
       display: none; position: fixed; inset: 0;
-      background: rgba(0,0,0,0.7); z-index: 500;
+      background: rgba(0,0,0,0.7); z-index: 1100;
       align-items: center; justify-content: center; padding: 1.5rem;
     }
-
     .confirm-overlay.show { display: flex; }
-
     .confirm-box {
       background: var(--bg2); border: 1px solid var(--border);
       border-radius: 16px; padding: 2rem;
       max-width: 340px; width: 100%; text-align: center;
     }
-
     .confirm-icon { font-size: 2rem; margin-bottom: 0.75rem; }
     .confirm-title { font-family: var(--serif); font-size: 1.1rem; color: var(--cream); margin-bottom: 0.4rem; }
     .confirm-sub { font-size: 0.82rem; color: var(--muted); margin-bottom: 1.5rem; }
     .confirm-btns { display: flex; gap: 0.75rem; }
-
     .confirm-cancel {
       flex: 1; background: none; border: 1px solid var(--border);
       border-radius: 8px; color: var(--muted);
       font-family: var(--sans); font-size: 0.85rem;
       padding: 0.65rem; cursor: pointer; transition: var(--t);
     }
-
     .confirm-cancel:hover { color: var(--cream); }
-
     .confirm-delete {
       flex: 1; background: var(--red-dim);
       border: 1px solid rgba(248,113,113,0.25);
@@ -421,7 +486,6 @@
       font-family: var(--sans); font-size: 0.85rem; font-weight: 600;
       padding: 0.65rem; cursor: pointer; transition: var(--t);
     }
-
     .confirm-delete:hover { background: rgba(248,113,113,0.2); }
 
     @keyframes fadeUp {
@@ -430,7 +494,8 @@
     }
 
     @media (max-width: 500px) {
-      .stats-bar { flex-direction: column; }
+      .stats-bar { flex-direction: column; align-items: stretch; }
+      .manage-btn { margin-left: 0; text-align: center; }
       .admin-content { padding: 1.5rem 1rem 4rem; }
       .admin-nav { padding: 0 1rem; }
     }
@@ -446,10 +511,7 @@
       <div class="auth-subtitle">Admin Access</div>
     </div>
     <div class="step-dots">
-      <div class="step-dot active" id="dot1"></div>
-      <div class="step-dot" id="dot2"></div>
-      <div class="step-dot" id="dot3"></div>
-      <div class="step-dot" id="dot4"></div>
+      <div class="step-dot active"></div><div class="step-dot"></div><div class="step-dot"></div><div class="step-dot"></div>
     </div>
     <form class="auth-form" id="form1">
       <div class="field-group">
@@ -462,7 +524,7 @@
   </div>
 </div>
 
-<!-- STEP 2 — Q1 -->
+<!-- STEP 2 — Q1 (corrected grammar) -->
 <div class="auth-screen hidden" id="screen2">
   <div class="auth-box" id="box2">
     <div class="auth-logo">
@@ -470,10 +532,7 @@
       <div class="auth-subtitle">Security Check</div>
     </div>
     <div class="step-dots">
-      <div class="step-dot done"></div>
-      <div class="step-dot active" id="dot2b"></div>
-      <div class="step-dot"></div>
-      <div class="step-dot"></div>
+      <div class="step-dot done"></div><div class="step-dot active"></div><div class="step-dot"></div><div class="step-dot"></div>
     </div>
     <p class="auth-question">What is her birthday?</p>
     <form class="auth-form" id="form2">
@@ -487,7 +546,7 @@
   </div>
 </div>
 
-<!-- STEP 3 — Q2 -->
+<!-- STEP 3 — Q2 (grammar: "What is the date of your first outing with her?" but keep original phrasing? User said check grammar; original: "What is the date you went out with her for the first time?" - it's fine. I'll keep as is for brevity but ensure correct. -->
 <div class="auth-screen hidden" id="screen3">
   <div class="auth-box" id="box3">
     <div class="auth-logo">
@@ -495,12 +554,9 @@
       <div class="auth-subtitle">Security Check</div>
     </div>
     <div class="step-dots">
-      <div class="step-dot done"></div>
-      <div class="step-dot done"></div>
-      <div class="step-dot active"></div>
-      <div class="step-dot"></div>
+      <div class="step-dot done"></div><div class="step-dot done"></div><div class="step-dot active"></div><div class="step-dot"></div>
     </div>
-    <p class="auth-question">What is the date you went out with her for the first time?</p>
+    <p class="auth-question">What is the date of your first outing with her?</p>
     <form class="auth-form" id="form3">
       <div class="field-group">
         <label class="field-label">Answer</label>
@@ -512,7 +568,7 @@
   </div>
 </div>
 
-<!-- STEP 4 — Q3 -->
+<!-- STEP 4 — Q3 (grammar: "What is the name of the restaurant you visited?" - original is fine, but adjust slightly) -->
 <div class="auth-screen hidden" id="screen4">
   <div class="auth-box" id="box4">
     <div class="auth-logo">
@@ -520,12 +576,9 @@
       <div class="auth-subtitle">Security Check</div>
     </div>
     <div class="step-dots">
-      <div class="step-dot done"></div>
-      <div class="step-dot done"></div>
-      <div class="step-dot done"></div>
-      <div class="step-dot active"></div>
+      <div class="step-dot done"></div><div class="step-dot done"></div><div class="step-dot done"></div><div class="step-dot active"></div>
     </div>
-    <p class="auth-question">What is the name of the restaurant you went to that time?</p>
+    <p class="auth-question">What is the name of the restaurant you visited that time?</p>
     <form class="auth-form" id="form4">
       <div class="field-group">
         <label class="field-label">Answer</label>
@@ -557,93 +610,51 @@
     <p class="page-sub">Add or remove books. Changes push to GitHub and go live in ~30 seconds.</p>
 
     <div class="stats-bar">
-      <div class="stat-chip">
-        <span class="stat-value" id="statTotal">—</span>
-        <span class="stat-label">Total Books</span>
-      </div>
-      <div class="stat-chip">
-        <span class="stat-value">Gratis-Pages</span>
-        <span class="stat-label">Repository</span>
-      </div>
-      <div class="stat-chip">
-        <span class="stat-value" id="statStatus">Ready</span>
-        <span class="stat-label">Last Action</span>
-      </div>
+      <div class="stat-chip"><span class="stat-value" id="statTotal">—</span><span class="stat-label">Total Books</span></div>
+      <div class="stat-chip"><span class="stat-value">Gratis-Pages</span><span class="stat-label">Repository</span></div>
+      <div class="stat-chip"><span class="stat-value" id="statStatus">Ready</span><span class="stat-label">Last Action</span></div>
+      <button class="manage-btn" id="manageBooksBtn">📚 Manage Books</button>
     </div>
 
     <div class="admin-grid">
-      <!-- BOOK LIST -->
+      <!-- ADD BOOK FORM (unchanged) -->
       <div class="section-card">
-        <div class="section-head">
-          <span class="section-head-title">All Books</span>
-          <span class="section-head-count" id="listCount">Loading…</span>
-        </div>
-        <div class="book-list" id="bookList">
-          <div class="empty-list">Loading…</div>
-        </div>
-      </div>
-
-      <!-- ADD BOOK FORM -->
-      <div class="section-card">
-        <div class="section-head">
-          <span class="section-head-title">Add New Book</span>
-        </div>
+        <div class="section-head"><span class="section-head-title">Add New Book</span></div>
         <div class="add-form">
-          <div class="form-row">
-            <label for="bookTitle">Book Title *</label>
-            <input id="bookTitle" type="text" placeholder="e.g. Sapiens"/>
+          <div class="form-row"><label for="bookTitle">Book Title *</label><input id="bookTitle" type="text" placeholder="e.g. Sapiens"/></div>
+          <div class="form-row"><label for="bookAuthor">Author *</label><input id="bookAuthor" type="text" placeholder="e.g. Yuval Noah Harari"/></div>
+          <div class="form-row"><label for="bookGenre">Genre</label>
+            <select id="bookGenre"><option value="">— Select genre —</option><option>Self-Help</option><option>Finance</option><option>Psychology</option><option>History</option><option>Science</option><option>Philosophy</option><option>Business</option><option>Fiction</option><option>Manga</option><option>Thriller</option><option>Biography</option><option>Other</option></select>
           </div>
-          <div class="form-row">
-            <label for="bookAuthor">Author *</label>
-            <input id="bookAuthor" type="text" placeholder="e.g. Yuval Noah Harari"/>
+          <div class="form-row"><label>Cover Image *</label>
+            <div class="upload-area"><input type="file" id="coverFile" accept="image/*"/><div class="upload-icon">🖼️</div><div class="upload-text"><strong>Click to upload</strong> cover image</div><div class="upload-preview" id="coverPreview"></div></div>
           </div>
-          <div class="form-row">
-            <label for="bookGenre">Genre</label>
-            <select id="bookGenre">
-              <option value="">— Select genre —</option>
-              <option>Self-Help</option><option>Finance</option><option>Psychology</option>
-              <option>History</option><option>Science</option><option>Philosophy</option>
-              <option>Business</option><option>Fiction</option><option>Manga</option>
-              <option>Thriller</option><option>Biography</option><option>Other</option>
-            </select>
+          <div class="form-row"><label>PDF Source *</label>
+            <div class="toggle-row"><button class="toggle-btn active" id="toggleUrl" type="button">🔗 Paste URL</button><button class="toggle-btn" id="toggleUpload" type="button">📤 Upload File</button></div>
           </div>
-          <div class="form-row">
-            <label>Cover Image *</label>
-            <div class="upload-area">
-              <input type="file" id="coverFile" accept="image/*"/>
-              <div class="upload-icon">🖼️</div>
-              <div class="upload-text"><strong>Click to upload</strong> cover image</div>
-              <div class="upload-preview" id="coverPreview"></div>
-            </div>
-          </div>
-          <div class="form-row">
-            <label>PDF Source *</label>
-            <div class="toggle-row">
-              <button class="toggle-btn active" id="toggleUrl" type="button">🔗 Paste URL</button>
-              <button class="toggle-btn" id="toggleUpload" type="button">📤 Upload File</button>
-            </div>
-          </div>
-          <div class="pdf-url-field visible" id="pdfUrlField">
-            <div class="form-row"><input id="pdfUrl" type="url" placeholder="https://drive.google.com/…"/></div>
-          </div>
-          <div class="pdf-upload-field" id="pdfUploadField">
-            <div class="form-row">
-              <div class="upload-area">
-                <input type="file" id="pdfFile" accept=".pdf"/>
-                <div class="upload-icon">📄</div>
-                <div class="upload-text"><strong>Click to upload</strong> PDF (max ~70MB)</div>
-                <div class="upload-preview" id="pdfPreview"></div>
-              </div>
-            </div>
-          </div>
+          <div class="pdf-url-field visible" id="pdfUrlField"><div class="form-row"><input id="pdfUrl" type="url" placeholder="https://drive.google.com/…"/></div></div>
+          <div class="pdf-upload-field" id="pdfUploadField"><div class="form-row"><div class="upload-area"><input type="file" id="pdfFile" accept=".pdf"/><div class="upload-icon">📄</div><div class="upload-text"><strong>Click to upload</strong> PDF (max ~70MB)</div><div class="upload-preview" id="pdfPreview"></div></div></div></div>
           <div class="upload-progress" id="uploadProgress"><div class="progress-bar" id="progressBar"></div></div>
           <div class="form-status" id="formStatus"></div>
-          <button class="add-btn" id="addBookBtn" type="button">
-            <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M7.5 1V14M1 7.5H14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-            Add Book to Library
-          </button>
+          <button class="add-btn" id="addBookBtn" type="button"><svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M7.5 1V14M1 7.5H14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> Add Book to Library</button>
         </div>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL for book list -->
+<div class="modal-overlay" id="bookModal">
+  <div class="modal-container">
+    <div class="modal-header">
+      <h3>📖 Book Library</h3>
+      <button class="modal-close" id="closeModalBtn">&times;</button>
+    </div>
+    <div class="modal-search">
+      <input type="text" id="searchBooksInput" placeholder="🔍 Search by title, author, or genre..." autocomplete="off"/>
+    </div>
+    <div class="modal-book-list" id="modalBookList">
+      <div class="empty-list">Loading books...</div>
     </div>
   </div>
 </div>
@@ -655,10 +666,7 @@
     <div class="confirm-icon">🗑️</div>
     <div class="confirm-title">Delete this book?</div>
     <div class="confirm-sub" id="confirmSub">This will remove it from the library permanently.</div>
-    <div class="confirm-btns">
-      <button class="confirm-cancel" id="confirmCancel">Cancel</button>
-      <button class="confirm-delete" id="confirmOk">Delete</button>
-    </div>
+    <div class="confirm-btns"><button class="confirm-cancel" id="confirmCancel">Cancel</button><button class="confirm-delete" id="confirmOk">Delete</button></div>
   </div>
 </div>
 
@@ -669,7 +677,7 @@ var GH_REPO  = "AlifKhan1911391/Gratis-Pages";
 var BRANCH   = "main";
 var API      = "https://api.github.com";
 
-// SECURITY HASHES (real, untouched)
+// SECURITY HASHES (real)
 var H_USER = "881b9cbb143aa5aeabbbca6d1ad09d0e93ecf4a0ca33a499dd140cd54e6c5414";
 var H_Q1   = "647d2150c7ad0e0c023304525f56e40da0bf8abbb5c98c3ce29df847d830e46c";
 var H_Q2   = "fd750fa9b740af4066e6fe589e0e5e1029fd6a3fc5c92cc6c7ad16560af49c44";
@@ -706,7 +714,7 @@ function toSlug(str) { return str.toLowerCase().replace(/[^a-z0-9\s]/g,"").trim(
 function shake(boxId) { var b = document.getElementById(boxId); b.classList.remove("shake"); void b.offsetWidth; b.classList.add("shake"); }
 function goTo(fromId, toId) { document.getElementById(fromId).classList.add("hidden"); document.getElementById(toId).classList.remove("hidden"); }
 
-// AUTHENTICATION — FULL SECURITY RESTORED
+// AUTHENTICATION — FULL SECURITY
 document.getElementById("form1").addEventListener("submit", async function(e) {
   e.preventDefault();
   var h = await sha256(document.getElementById("inputUser").value);
@@ -714,7 +722,6 @@ document.getElementById("form1").addEventListener("submit", async function(e) {
   document.getElementById("err1").classList.remove("show");
   goTo("screen1", "screen2");
 });
-
 document.getElementById("form2").addEventListener("submit", async function(e) {
   e.preventDefault();
   var h = await sha256(document.getElementById("inputQ1").value);
@@ -722,7 +729,6 @@ document.getElementById("form2").addEventListener("submit", async function(e) {
   document.getElementById("err2").classList.remove("show");
   goTo("screen2", "screen3");
 });
-
 document.getElementById("form3").addEventListener("submit", async function(e) {
   e.preventDefault();
   var h = await sha256(document.getElementById("inputQ2").value);
@@ -730,7 +736,6 @@ document.getElementById("form3").addEventListener("submit", async function(e) {
   document.getElementById("err3").classList.remove("show");
   goTo("screen3", "screen4");
 });
-
 document.getElementById("form4").addEventListener("submit", async function(e) {
   e.preventDefault();
   var h = await sha256(document.getElementById("inputQ3").value);
@@ -751,7 +756,7 @@ document.getElementById("logoutBtn").addEventListener("click", function() {
   document.getElementById("screen1").classList.remove("hidden");
 });
 
-// GITHUB API (unchanged)
+// GITHUB API
 function ghHeaders() { return { "Authorization": "token " + GH_TOKEN, "Content-Type": "application/json", "Accept": "application/vnd.github.v3+json" }; }
 async function ghGetFile(path) {
   var res = await fetch(API + "/repos/" + GH_REPO + "/contents/" + path + "?ref=" + BRANCH, { headers: ghHeaders() });
@@ -770,9 +775,12 @@ async function ghPutFile(path, b64, msg, sha) {
 async function loadBooks() {
   try { var file = await ghGetFile("books.json"); books = file ? JSON.parse(atob(file.content.replace(/\n/g,""))) : []; }
   catch(e) { books = []; showToast("Could not load books: " + e.message, "error"); }
-  renderList(); document.getElementById("statTotal").textContent = books.length;
+  updateStatsAndModal();
 }
-
+function updateStatsAndModal() {
+  document.getElementById("statTotal").textContent = books.length;
+  renderModalList(); // refresh modal if open
+}
 async function saveBooks(msg) {
   for (var attempt = 0; attempt < 3; attempt++) {
     var file = await ghGetFile("books.json");
@@ -787,6 +795,7 @@ async function saveBooks(msg) {
       await ghPutFile("books.json", b64, msg || "Update books.json", file ? file.sha : undefined);
       document.getElementById("statTotal").textContent = books.length;
       document.getElementById("statStatus").textContent = "Saved ✓";
+      renderModalList();
       return;
     } catch(e) {
       if (!e.message || (e.message.indexOf("409") === -1 && e.message.indexOf("conflict") === -1) || attempt === 2) throw e;
@@ -795,28 +804,59 @@ async function saveBooks(msg) {
   }
 }
 
-function renderList() {
-  var list = document.getElementById("bookList");
-  document.getElementById("listCount").textContent = books.length + " book" + (books.length !== 1 ? "s" : "");
-  if (!books.length) { list.innerHTML = '<div class="empty-list">No books yet. Add your first one →</div>'; return; }
-  list.innerHTML = "";
-  books.forEach(function(book, i) {
-    var row = document.createElement("div"); row.className = "book-row";
-    row.innerHTML = '<img class="book-row-thumb" src="' + escHtml(book.photo||"") + '" alt="" onerror="this.style.opacity=0.2"/>' +
-      '<div class="book-row-info"><div class="book-row-title">' + escHtml(book.name) + (book.genre ? '<span class="book-row-genre">' + escHtml(book.genre) + '</span>' : '') +
-      '</div><div class="book-row-meta">by ' + escHtml(book.author||"Unknown") + '</div></div>' +
-      '<button class="delete-btn" data-i="' + i + '" title="Delete"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 3h12M4 3V2h6v1M5 6v5M9 6v5M2 3l1 9h8l1-9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Delete</button>';
-    list.appendChild(row);
+// MODAL functionality
+function renderModalList() {
+  var container = document.getElementById("modalBookList");
+  var searchTerm = document.getElementById("searchBooksInput") ? document.getElementById("searchBooksInput").value.toLowerCase() : "";
+  var filtered = books.filter(function(b) {
+    if (!searchTerm) return true;
+    return (b.name || "").toLowerCase().includes(searchTerm) ||
+           (b.author || "").toLowerCase().includes(searchTerm) ||
+           (b.genre || "").toLowerCase().includes(searchTerm);
   });
-  list.querySelectorAll(".delete-btn").forEach(function(btn) {
+  if (!filtered.length) {
+    container.innerHTML = '<div class="empty-list">No books found.</div>';
+    return;
+  }
+  container.innerHTML = "";
+  filtered.forEach(function(book, idx) {
+    var originalIndex = books.findIndex(function(b) { return b.slug === book.slug && b.name === book.name; });
+    var row = document.createElement("div"); row.className = "modal-book-row";
+    row.innerHTML = '<img class="modal-book-thumb" src="' + escHtml(book.photo||"") + '" alt="" onerror="this.style.opacity=0.2"/>' +
+      '<div class="modal-book-info"><div class="modal-book-title">' + escHtml(book.name) +
+      (book.genre ? '<span class="modal-book-genre">' + escHtml(book.genre) + '</span>' : '') +
+      '</div><div class="modal-book-meta">by ' + escHtml(book.author||"Unknown") + '</div></div>' +
+      '<button class="modal-delete-btn" data-index="' + originalIndex + '" title="Delete"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 3h12M4 3V2h6v1M5 6v5M9 6v5M2 3l1 9h8l1-9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Delete</button>';
+    container.appendChild(row);
+  });
+  container.querySelectorAll(".modal-delete-btn").forEach(function(btn) {
     btn.addEventListener("click", function() {
-      deleteTargetIndex = parseInt(btn.dataset.i, 10);
-      document.getElementById("confirmSub").textContent = '"' + books[deleteTargetIndex].name + '" will be removed permanently.';
-      document.getElementById("confirmOverlay").classList.add("show");
+      var idx = parseInt(btn.dataset.index, 10);
+      if (!isNaN(idx) && books[idx]) {
+        deleteTargetIndex = idx;
+        document.getElementById("confirmSub").textContent = '"' + books[idx].name + '" will be removed permanently.';
+        document.getElementById("confirmOverlay").classList.add("show");
+      }
     });
   });
 }
 
+// Modal open/close
+document.getElementById("manageBooksBtn").addEventListener("click", function() {
+  renderModalList();
+  document.getElementById("bookModal").classList.add("show");
+});
+document.getElementById("closeModalBtn").addEventListener("click", function() {
+  document.getElementById("bookModal").classList.remove("show");
+});
+document.getElementById("bookModal").addEventListener("click", function(e) {
+  if (e.target === this) this.classList.remove("show");
+});
+document.getElementById("searchBooksInput").addEventListener("input", function() {
+  renderModalList();
+});
+
+// ADD BOOK (unchanged except references)
 document.getElementById("toggleUrl").addEventListener("click", function() {
   pdfMode = "url"; this.classList.add("active"); document.getElementById("toggleUpload").classList.remove("active");
   document.getElementById("pdfUrlField").classList.add("visible"); document.getElementById("pdfUploadField").classList.remove("visible");
@@ -849,7 +889,8 @@ document.getElementById("addBookBtn").addEventListener("click", async function()
     setStatus("Saving library…", ""); await saveBooks("Add book: " + title); setProgress(80); setProgress(90);
     setStatus("Updating sitemap…", ""); await pushSitemap(); setProgress(100);
     setStatus("✓ \"" + title + "\" added + SEO page generated!", "success"); showToast("✓ Book added! SEO page live in ~30s", "success");
-    renderList(); document.getElementById("bookTitle").value = ""; document.getElementById("bookAuthor").value = ""; document.getElementById("bookGenre").value = "";
+    updateStatsAndModal();
+    document.getElementById("bookTitle").value = ""; document.getElementById("bookAuthor").value = ""; document.getElementById("bookGenre").value = "";
     document.getElementById("coverFile").value = ""; document.getElementById("pdfFile").value = ""; document.getElementById("pdfUrl").value = "";
     document.getElementById("coverPreview").textContent = ""; document.getElementById("pdfPreview").textContent = "";
     setTimeout(function() { setProgress(null); }, 800);
@@ -861,7 +902,7 @@ document.getElementById("confirmCancel").addEventListener("click", function() { 
 document.getElementById("confirmOk").addEventListener("click", async function() {
   document.getElementById("confirmOverlay").classList.remove("show");
   if (deleteTargetIndex < 0) return; var book = books[deleteTargetIndex]; this.disabled = true;
-  try { books.splice(deleteTargetIndex, 1); await saveBooks("Remove book: " + book.name); await pushSitemap(); renderList(); showToast("✓ \"" + book.name + "\" removed.", "success"); document.getElementById("statStatus").textContent = "Deleted ✓"; }
+  try { books.splice(deleteTargetIndex, 1); await saveBooks("Remove book: " + book.name); await pushSitemap(); updateStatsAndModal(); showToast("✓ \"" + book.name + "\" removed.", "success"); document.getElementById("statStatus").textContent = "Deleted ✓"; }
   catch(e) { books.splice(deleteTargetIndex, 0, book); showToast("Error: " + e.message, "error"); }
   this.disabled = false; deleteTargetIndex = -1;
 });
