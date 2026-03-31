@@ -166,5 +166,21 @@
     "genre": "Psychology",
     "slug": "the-victor-protocol-bangla",
     "pdfUrl": "pdfs/the-victor-protocol-bangla-1774975710517.pdf"
+  },
+  {
+    "name": "The Puppet Master",
+    "photo": "covers/the-puppet-master-1774975784682.png",
+    "author": "Mahadi Islam Alif",
+    "genre": "Psychology",
+    "slug": "the-puppet-master",
+    "pdfUrl": "pdfs/the-puppet-master-1774975784682.pdf"
+  },
+  {
+    "name": "The Puppet Master",
+    "photo": "covers/the-puppet-master-1774975826892.png",
+    "author": "Mahadi Islam Alif",
+    "genre": "Psychology",
+    "slug": "the-puppet-master",
+    "pdfUrl": "pdfs/the-puppet-master-1774975826892.pdf"
   }
 ]
