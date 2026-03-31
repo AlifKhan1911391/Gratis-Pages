@@ -102,5 +102,13 @@
     "genre": "Philosophy",
     "slug": "meditations",
     "pdfUrl": "https://dn720006.ca.archive.org/0/items/meditationsofmar00marc/meditationsofmar00marc.pdf"
+  },
+  {
+    "name": "The Psychology of Money",
+    "photo": "covers/the-psychology-of-money-1774957612576.jpg",
+    "author": "Morgan Housel",
+    "genre": "Finance",
+    "slug": "the-psychology-of-money",
+    "pdfUrl": "https://tiue.uz/wp-content/uploads/2024/02/The-Psychology-of-Money-Morgan-Housel.pdf"
   }
 ]
