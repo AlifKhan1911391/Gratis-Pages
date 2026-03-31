@@ -190,9 +190,12 @@ header {
 .nav-count {
   font-size: 0.72rem; color: var(--muted);
   letter-spacing: 0.1em; text-transform: uppercase;
-  display: none;
+  display: block; /* always visible */
 }
-@media (min-width: 700px) { .nav-count { display: block; } }
+@media (max-width: 700px) {
+  .nav-count { display: block; } /* keep visible */
+  .nav-center { max-width: none; flex: 1; } /* make search bar take space */
+}
 
 .menu-btn {
   display: flex; align-items: center; gap: 0.5rem;
@@ -294,8 +297,7 @@ header {
   margin-top: -0.25rem;
 }
 
-/* ─── FILTERS ROW REMOVED ─── */
-/* (no .filters-row styles needed) */
+/* ─── NO GENRE FILTERS ─── */
 
 /* ─── LIBRARY ─── */
 .library {
@@ -458,7 +460,45 @@ header {
 .drawer-about-text { font-size: 0.875rem; color: var(--muted); line-height: 1.75; }
 .drawer-about-text strong { color: var(--text); }
 
-/* attribution moved here */
+/* Detailed bio for Mahadi Islam Alif */
+.bio-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem 1rem 1.2rem;
+  margin-top: 0.75rem;
+}
+.bio-name {
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--cream);
+  margin-bottom: 0.5rem;
+}
+.bio-title {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--gold);
+  margin-bottom: 0.75rem;
+}
+.bio-text {
+  font-size: 0.82rem;
+  color: var(--muted);
+  line-height: 1.6;
+  margin-bottom: 0.75rem;
+}
+.bio-link {
+  display: inline-block;
+  color: var(--gold);
+  text-decoration: none;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border-bottom: 1px dotted var(--gold-dim);
+  transition: var(--t);
+}
+.bio-link:hover { color: var(--cream); border-bottom-color: var(--gold); }
+
 .drawer-attribution {
   margin-top: 1rem;
   padding-top: 0.75rem;
@@ -510,26 +550,13 @@ header {
 .form-success.show { display: block; background: rgba(34,197,94,0.08); color: #4ade80; border: 1px solid rgba(34,197,94,0.2); }
 .form-error.show { display: block; background: rgba(239,68,68,0.08); color: #f87171; border: 1px solid rgba(239,68,68,0.2); }
 
-/* ─── FOOTER (modified) ─── */
+/* ─── FOOTER (completely empty) ─── */
 footer {
   position: relative; z-index: 1;
   border-top: 1px solid var(--border);
   padding: 2rem 2rem;
 }
-
-.footer-inner {
-  max-width: 1260px; margin: 0 auto;
-  display: flex; align-items: center; justify-content: space-between;
-  flex-wrap: wrap; gap: 1rem;
-}
-
-.footer-brand { font-family: var(--serif); font-size: 1.1rem; font-weight: 700; color: var(--cream); }
-.footer-brand em { font-style: italic; font-weight: 400; color: var(--gold); }
-
-.footer-ornament {
-  font-family: var(--serif); font-size: 1.4rem; color: rgba(232,168,56,0.25);
-  user-select: none;
-}
+/* no content inside footer */
 
 /* ─── ANIMATIONS ─── */
 @keyframes fadeUp {
@@ -541,14 +568,16 @@ footer {
 @media (max-width: 700px) {
   .hero-inner { grid-template-columns: 1fr; }
   .hero-right { display: none; }
-  .nav-center { display: none; }
+  .nav-center { display: block; } /* ensure search bar visible */
+  .nav-inner { flex-wrap: wrap; height: auto; padding: 0.75rem 1rem; gap: 0.75rem; }
+  .nav-center { max-width: 100%; order: 2; width: 100%; margin-top: 0.25rem; margin-bottom: 0.25rem; }
+  .logo-wrap { order: 1; }
+  .nav-right { order: 3; }
   .book-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
   .drawer { width: 100vw; max-width: 100vw; }
   .hero { padding: 3.5rem 1.25rem 2rem; }
   .library { padding: 1.75rem 1.25rem 5rem; }
-  .footer-ornament { display: none; }
 }
-
 @media (max-width: 400px) {
   .book-grid { grid-template-columns: 1fr; }
 }
@@ -601,8 +630,6 @@ footer {
   </div>
 </section>
 
-<!-- NO GENRE FILTERS ROW -->
-
 <!-- LIBRARY -->
 <main class="library">
   <div class="section-bar">
@@ -614,13 +641,8 @@ footer {
   </div>
 </main>
 
-<!-- FOOTER (without attribution text) -->
-<footer>
-  <div class="footer-inner">
-    <span class="footer-brand">Gratis<em>Pages</em></span>
-    <span class="footer-ornament" aria-hidden="true">❧</span>
-  </div>
-</footer>
+<!-- EMPTY FOOTER (no text) -->
+<footer></footer>
 
 <!-- DRAWER BACKDROP -->
 <div class="drawer-backdrop" id="drawerBackdrop"></div>
@@ -640,9 +662,18 @@ footer {
         <strong>Mahadi Islam Alif</strong>. No sign-up. No paywalls.
         Just books that matter.
       </p>
-      <!-- moved attribution here -->
-      <div class="drawer-attribution">
-        Built by <a href="https://mahadiislamalif.netlify.app" target="_blank" rel="noopener">Mahadi Islam Alif</a> &mdash; &copy; 2026
+
+      <!-- Detailed bio of Mahadi Islam Alif -->
+      <div class="bio-card">
+        <div class="bio-name">Mahadi Islam Alif</div>
+        <div class="bio-title">Digital Marketer · AI Enthusiast · Developer</div>
+        <div class="bio-text">
+          Alif is a passionate self-learner with verified credentials from Google, Microsoft, freeCodeCamp, and Saylor Academy. 
+          He holds certifications in Digital Marketing, Artificial Intelligence, Python, Data Science, and Prompt Engineering. 
+          Beyond academics, he participated in the ACS National Medicup 2025 and continuously builds projects that merge technology with accessible knowledge. 
+          <strong>Gratis Pages</strong> is his vision of democratizing reading through a no‑paywall, free PDF library.
+        </div>
+        <a href="https://mahadiislamalif.netlify.app" class="bio-link" target="_blank" rel="noopener">Visit full portfolio →</a>
       </div>
     </div>
 
@@ -685,6 +716,9 @@ footer {
       </form>
     </div>
 
+    <div class="drawer-attribution">
+      Built by <a href="https://mahadiislamalif.netlify.app" target="_blank" rel="noopener">Mahadi Islam Alif</a> &mdash; &copy; 2026
+    </div>
   </div>
 </aside>
 
@@ -752,7 +786,6 @@ function renderBooks(books) {
   cardMap.forEach(function(item) { grid.appendChild(item.card); });
   grid.appendChild(emptyEl);
   updateCount(books.length);
-  // no filters to build
 }
 
 /* ── FILTER + SEARCH (only search) ── */
