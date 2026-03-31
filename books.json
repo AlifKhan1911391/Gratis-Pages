@@ -126,5 +126,13 @@
     "genre": "History",
     "slug": "sapiens-a-brief-history-of-humankind",
     "pdfUrl": "https://staibabussalamsula.ac.id/wp-content/uploads/2023/11/yuval_noah_harari-sapiens_a_brief_histor.pdf"
+  },
+  {
+    "name": "Time Management (Bangla)",
+    "photo": "covers/time-management-bangla-1774974794753.jpg",
+    "author": "Brian Tracy",
+    "genre": "",
+    "slug": "time-management-bangla",
+    "pdfUrl": "pdfs/time-management-bangla-1774974794753.pdf"
   }
 ]
