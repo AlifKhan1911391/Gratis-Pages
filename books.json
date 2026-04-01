@@ -208,7 +208,7 @@
     "pdfUrl": "pdfs/fatherland-1775032921272.pdf"
   },
   {
-    "name": "Read People Like a Book: How to Analyze, Understand, and Predict PeopleÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂs Emotions, Thoughts, Intentions, and Behaviors",
+    "name": "Read People Like a Book: How to Analyze, Understand, and Predict PeopleÃÂÃÂ¢ÃÂÃÂÃÂÃÂs Emotions, Thoughts, Intentions, and Behaviors",
     "photo": "covers/read-people-like-a-book-how-to-analyze-understand-and-predict-peoples-emotions-thoughts-intentions-and-behaviors-1775042548127.jpg",
     "author": "Patrick King",
     "genre": "Psychology",
@@ -256,27 +256,19 @@
     "pdfUrl": "https://notability.com/g/download/pdf/0heECrB~x3jujrWI_3VyBq/Twisted%20Love.pdf"
   },
   {
-    "name": "Twisted Hate",
-    "photo": "covers/twisted-hate-1775069757835.webp",
-    "author": "Ana Huang",
-    "genre": "Fiction",
-    "slug": "twisted-hate",
-    "pdfUrl": "https://online.fliphtml5.com/zygyx/roto/#p=1"
-  },
-  {
     "name": "Twisted Lies",
-    "photo": "covers/twisted-lies-1775069874184.png",
+    "photo": "covers/twisted-lies-1775069800666.png",
     "author": "Ana Huang",
     "genre": "Fiction",
     "slug": "twisted-lies",
     "pdfUrl": "https://notability.com/g/download/pdf/2uN7L0NjW6ccKYs4R~Myi6/Twisted%20Lies.pdf"
   },
   {
-    "name": "Twisted Games",
-    "photo": "covers/twisted-games-1775069946082.png",
+    "name": "Twisted Lies",
+    "photo": "covers/twisted-lies-1775069810068.png",
     "author": "Ana Huang",
     "genre": "Fiction",
-    "slug": "twisted-games",
-    "pdfUrl": "https://notability.com/g/download/pdf/0JwTzywix0LcXa5nW0veDr/Twisted%20Games.pdf"
+    "slug": "twisted-lies",
+    "pdfUrl": "https://notability.com/g/download/pdf/2uN7L0NjW6ccKYs4R~Myi6/Twisted%20Lies.pdf"
   }
 ]
