@@ -208,7 +208,7 @@
     "pdfUrl": "pdfs/fatherland-1775032921272.pdf"
   },
   {
-    "name": "Read People Like a Book: How to Analyze, Understand, and Predict PeopleÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂs Emotions, Thoughts, Intentions, and Behaviors",
+    "name": "Read People Like a Book: How to Analyze, Understand, and Predict PeopleÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂs Emotions, Thoughts, Intentions, and Behaviors",
     "photo": "covers/read-people-like-a-book-how-to-analyze-understand-and-predict-peoples-emotions-thoughts-intentions-and-behaviors-1775042548127.jpg",
     "author": "Patrick King",
     "genre": "Psychology",
@@ -270,5 +270,13 @@
     "genre": "Fiction",
     "slug": "twisted-games",
     "pdfUrl": "https://notability.com/g/download/pdf/0JwTzywix0LcXa5nW0veDr/Twisted%20Games.pdf"
+  },
+  {
+    "name": "Twisted Hate",
+    "photo": "covers/twisted-hate-1775070404036.webp",
+    "author": "Ana Huang",
+    "genre": "Fiction",
+    "slug": "twisted-hate",
+    "pdfUrl": "pdfs/twisted-hate-1775070404036.pdf"
   }
 ]
