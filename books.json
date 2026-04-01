@@ -208,7 +208,7 @@
     "pdfUrl": "pdfs/fatherland-1775032921272.pdf"
   },
   {
-    "name": "Read People Like a Book: How to Analyze, Understand, and Predict Peopleâs Emotions, Thoughts, Intentions, and Behaviors",
+    "name": "Read People Like a Book: How to Analyze, Understand, and Predict PeopleÃ¢ÂÂs Emotions, Thoughts, Intentions, and Behaviors",
     "photo": "covers/read-people-like-a-book-how-to-analyze-understand-and-predict-peoples-emotions-thoughts-intentions-and-behaviors-1775042548127.jpg",
     "author": "Patrick King",
     "genre": "Psychology",
@@ -230,5 +230,13 @@
     "genre": "Self-Help",
     "slug": "dopamine-detox-a-short-guide-to-remove-distractions-and-get-your-brain-to-do-hard-things",
     "pdfUrl": "pdfs/dopamine-detox-a-short-guide-to-remove-distractions-and-get-your-brain-to-do-hard-things-1775063267011.pdf"
+  },
+  {
+    "name": "The Art of War",
+    "photo": "covers/the-art-of-war-1775063742953.jpg",
+    "author": "Sun Tzu",
+    "genre": "History",
+    "slug": "the-art-of-war",
+    "pdfUrl": "pdfs/the-art-of-war-1775063742953.pdf"
   }
 ]
