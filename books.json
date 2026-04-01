@@ -206,5 +206,13 @@
     "genre": "Fiction",
     "slug": "fatherland",
     "pdfUrl": "pdfs/fatherland-1775032921272.pdf"
+  },
+  {
+    "name": "Read People Like a Book: How to Analyze, Understand, and Predict People’s Emotions, Thoughts, Intentions, and Behaviors",
+    "photo": "covers/read-people-like-a-book-how-to-analyze-understand-and-predict-peoples-emotions-thoughts-intentions-and-behaviors-1775042548127.jpg",
+    "author": "Patrick King",
+    "genre": "Psychology",
+    "slug": "read-people-like-a-book-how-to-analyze-understand-and-predict-peoples-emotions-thoughts-intentions-and-behaviors",
+    "pdfUrl": "https://content.fimsschools.com/academy.fims.org.pk/Read%20People%20Like%20a%20Book%20(Patrick%20King).pdf"
   }
 ]
