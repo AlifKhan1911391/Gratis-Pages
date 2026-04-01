@@ -22,13 +22,13 @@
       content="free pdf book, free ebook, read books online, classic books, gratis pages" />
 <meta name="robots" content="index, follow" />
 <meta name="author" content="Mahadi Islam Alif" />
-<link rel="canonical" id="metaCanonical" href="https://gratispages.netlify.app/" />
+<link rel="canonical" id="metaCanonical" href="" />
 
 <!-- ═══ OPEN GRAPH ═══ -->
 <meta property="og:type"        content="book" />
 <meta property="og:site_name"   content="Gratis Pages" />
 <meta property="og:locale"      content="en_US" />
-<meta property="og:url"         id="metaOgUrl"      content="https://gratispages.netlify.app/" />
+<meta property="og:url"         id="metaOgUrl"      content="" />
 <meta property="og:title"       id="metaOgTitle"    content="Free Book — Gratis Pages" />
 <meta property="og:description" id="metaOgDesc"     content="Read and download this free book on Gratis Pages." />
 <meta property="og:image"       id="metaOgImage"    content="" />
@@ -48,7 +48,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600&swap" rel="stylesheet"/>
 
 <style>
 /* ─── DESIGN TOKENS ─── */
@@ -245,211 +245,160 @@ header {
 
 /* FOOTER */
 footer { position: relative; z-index: 1; border-top: 1px solid var(--border); padding: 2rem; text-align: center; }
-.footer-text { font-size: 0.78rem; color: var(--muted); }
-.footer-brand { font-family: var(--serif); font-weight: 700; color: var(--cream); }
-.footer-brand em { font-style: italic; color: var(--gold); font-weight: 400; }
+.footer-text { font-size: 0.75rem; color: var(--muted); letter-spacing: 0.02em; }
+.footer-text a { color: var(--gold); text-decoration: none; }
 
-@keyframes fadeIn { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-@media (max-width: 768px) {
-  .book-layout { grid-template-columns: 1fr; gap: 2.5rem; }
-  .cover-col { position: static; max-width: 220px; margin: 0 auto; }
-  .page-wrap { padding: 2.5rem 1.25rem 5rem; }
-  .stats-row { gap: 1.5rem; }
-  .btn-read { align-self: stretch; justify-content: center; }
-  .book-title { font-size: 2.2rem; }
+/* RESPONSIVE */
+@media (max-width: 850px) {
+  .book-layout { grid-template-columns: 1fr; gap: 3rem; }
+  .cover-col { position: relative; top: 0; max-width: 260px; margin: 0 auto; }
+  .info-col { text-align: center; align-items: center; }
+  .stats-row { justify-content: center; gap: 2rem; }
+  .btn-read { align-self: center; width: 100%; justify-content: center; }
 }
 </style>
 </head>
 <body>
 
-<!-- CINEMATIC BLUR BACKGROUND — populated by JS once cover URL is known -->
-<div class="bg-blur" id="bgBlur"></div>
+<div id="bgBlur" class="bg-blur"></div>
 
 <header>
-  <div class="nav-inner">
-    <a class="logo-wrap" href="/">
+  <nav class="nav-inner">
+    <a href="/" class="logo-wrap">
       <span class="logo-g">Gratis</span>
       <span class="logo-p">Pages</span>
     </a>
-    <a class="back-btn" href="/" aria-label="Back to library">
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-        <path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
+    <a href="/" class="back-btn">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
       Back to Library
     </a>
-  </div>
+  </nav>
 </header>
 
-<!-- LOADING -->
-<div id="stateLoading" class="state-wrap" aria-live="polite">
-  <div class="spinner"></div>
-  <p class="state-sub">Loading book…</p>
-</div>
+<main>
+  <!-- LOADING STATE -->
+  <div id="stateLoading" class="state-wrap">
+    <div class="spinner"></div>
+    <h2 class="state-title">Opening the Vault</h2>
+    <p class="state-sub">Retrieving your book from the archives...</p>
+  </div>
 
-<!-- NOT FOUND -->
-<div id="stateNotFound" class="state-wrap" style="display:none">
-  <div class="state-icon">📚</div>
-  <div class="state-title">Book not found</div>
-  <p class="state-sub">This book isn't in the library.<br><a href="/" style="color:var(--gold)">Browse all books →</a></p>
-</div>
+  <!-- NOT FOUND STATE -->
+  <div id="stateNotFound" class="state-wrap" style="display:none;">
+    <div class="state-icon">📭</div>
+    <h2 class="state-title">Book Not Found</h2>
+    <p class="state-sub">The requested volume doesn't exist in our current collection.</p>
+    <br/>
+    <a href="/" class="btn-read" style="padding: 0.7rem 1.5rem; font-size: 0.8rem;">Return Home</a>
+  </div>
 
-<!-- BOOK CONTENT -->
-<main id="bookContent" class="page-wrap" style="display:none" itemscope itemtype="https://schema.org/Book">
-  <div class="book-layout">
-
-    <div class="cover-col">
-      <div class="cover-frame">
-        <img id="bookCover" src="" alt="Book cover" itemprop="image"
-          onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22280%22 height=%22420%22%3E%3Crect fill=%22%230d0e18%22 width=%22280%22 height=%22420%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 fill=%22%236b7090%22 font-family=%22serif%22 font-size=%2216%22 text-anchor=%22middle%22 dy=%22.35em%22%3ENo Cover%3C/text%3E%3C/svg%3E'"/>
-      </div>
-      <div class="badge-wrap">
-        <span class="badge">
-          <svg width="7" height="7" viewBox="0 0 7 7" fill="currentColor"><circle cx="3.5" cy="3.5" r="3.5"/></svg>
-          Free PDF
-        </span>
-      </div>
-    </div>
-
-    <div class="info-col">
-
-      <!-- BREADCRUMB — visible navigation trail + SEO hierarchy signal -->
-      <nav class="breadcrumb" aria-label="Breadcrumb">
-        <a href="/" class="breadcrumb-link">Library</a>
-        <span class="breadcrumb-sep" aria-hidden="true">/</span>
-        <span id="breadcrumbGenre" class="breadcrumb-current">Book</span>
-      </nav>
-
-      <span class="genre-tag" id="bookGenre"></span>
-      <h1 class="book-title" id="bookTitle" itemprop="name">—</h1>
-      <p class="book-author">by <strong id="bookAuthor" itemprop="author">—</strong></p>
-
-      <div class="divider"></div>
-
-      <div class="stats-row">
-        <div class="stat">
-          <span class="stat-label">Format</span>
-          <span class="stat-value" id="bookFormat">PDF</span>
+  <!-- BOOK CONTENT -->
+  <div id="bookContent" class="page-wrap" style="display:none;">
+    <div class="book-layout">
+      
+      <!-- LEFT: COVER -->
+      <div class="cover-col">
+        <div class="cover-frame">
+          <img id="bookCover" src="" alt="Book cover"/>
         </div>
-        <div class="stat">
-          <span class="stat-label">Access</span>
-          <span class="stat-value">Instant</span>
-        </div>
-        <div class="stat">
-          <span class="stat-label">Cost</span>
-          <span class="stat-value" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
-            <span itemprop="price" content="0">Free</span>
-            <meta itemprop="priceCurrency" content="USD"/>
+        <div class="badge-wrap">
+          <span class="badge">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            Verified PDF
           </span>
         </div>
       </div>
 
-      <a class="btn-read" id="pdfBtn" href="#" target="_blank" rel="noopener noreferrer">
-        Read Now
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-          <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </a>
+      <!-- RIGHT: INFO -->
+      <div class="info-col">
+        <nav class="breadcrumb">
+          <a href="/" class="breadcrumb-link">Library</a>
+          <span class="breadcrumb-sep">/</span>
+          <span id="breadcrumbGenre" class="breadcrumb-current">Book</span>
+        </nav>
+
+        <span id="bookGenre" class="genre-tag">GENRE</span>
+        <h1 id="bookTitle" class="book-title">Book Title</h1>
+        <p class="book-author">by <strong id="bookAuthor">Author Name</strong></p>
+
+        <div class="divider"></div>
+
+        <div class="stats-row">
+          <div class="stat">
+            <span class="stat-label">Format</span>
+            <span id="bookFormat" class="stat-value">PDF</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">Access</span>
+            <span class="stat-value">Instant</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">Cost</span>
+            <span class="stat-value" style="color: var(--gold);">Free</span>
+          </div>
+        </div>
+
+        <a id="pdfBtn" href="#" class="btn-read">
+          Read Book
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
 
     </div>
   </div>
 </main>
 
 <footer>
-  <p class="footer-text">&copy; 2026 <span class="footer-brand">Gratis<em>Pages</em></span> &mdash; Free books for curious minds.</p>
+  <p class="footer-text">
+    &copy; 2024 <a href="/">Gratis Pages</a>. All books are provided for educational purposes.
+  </p>
 </footer>
 
 <script>
+/* ── CONSTANTS ── */
 var DOMAIN = "https://gratispages.netlify.app";
 
-/* ── HELPER: set any attribute on a meta element by ID ── */
+/* ── HELPERS ── */
 function setMeta(id, attr, val) {
   var el = document.getElementById(id);
   if (el) el.setAttribute(attr, val);
 }
 
-/* ── HELPER: strip a leading slash so we never get double-slash URLs ──
-   FIX: book.photo values like "/covers/foo.jpg" would produce
-   "https://...//covers/foo.jpg". stripping the leading slash here fixes it. */
-function stripLeadingSlash(str) {
-  return (str || "").replace(/^\/+/, "");
+function stripLeadingSlash(s) {
+  return s.replace(/^\/+/, "");
 }
 
-/* ── INJECT STRUCTURED DATA ──
-   Emits three linked schemas:
-   1. Book        — rich result eligible for Google Books panel
-   2. BreadcrumbList — powers breadcrumb SERP display
-   3. WebPage     — ties the page into the site hierarchy          */
 function injectBookSchema(book, pageUrl, coverAbs) {
   var authorName = book.author || "Unknown";
-  var genre      = book.genre  || "";
-  var desc       = "Read and download \u201C" + book.name + "\u201D by " + authorName +
-                   " for free" + (genre ? " \u2014 " + genre + " genre" : "") +
-                   ". No signup required. Instant access on Gratis Pages.";
-
   var schemas = [
-    /* 1 — Book */
-    {
-      "@context": "https://schema.org",
-      "@type": "Book",
-      "name": book.name,
-      "description": desc,
-      "author": { "@type": "Person", "name": authorName },
-      "url": pageUrl,
-      "image": coverAbs,
-      "genre": genre,
-      "inLanguage": "en",
-      "isAccessibleForFree": true,
-      "publisher": {
-        "@type": "Organization",
-        "name": "Gratis Pages",
-        "url": DOMAIN
-      },
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD",
-        "availability": "https://schema.org/InStock"
-      },
-      "potentialAction": {
-        "@type": "ReadAction",
-        "target": { "@type": "EntryPoint", "urlTemplate": pageUrl }
-      }
-    },
-
-    /* 2 — BreadcrumbList */
     {
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",
       "itemListElement": [
-        {
-          "@type": "ListItem", "position": 1,
-          "name": "Library", "item": DOMAIN + "/"
-        },
-        {
-          "@type": "ListItem", "position": 2,
-          "name": genre || "Books",
-          "item": DOMAIN + "/" + (genre ? "?genre=" + encodeURIComponent(genre) : "")
-        },
-        {
-          "@type": "ListItem", "position": 3,
-          "name": book.name, "item": pageUrl
-        }
+        { "@type": "ListItem", "position": 1, "name": "Library", "item": DOMAIN + "/" },
+        { "@type": "ListItem", "position": 2, "name": book.name, "item": pageUrl }
       ]
     },
-
-    /* 3 — WebPage */
     {
       "@context": "https://schema.org",
-      "@type": "WebPage",
-      "name": book.name + " by " + authorName + " \u2014 Free PDF | Gratis Pages",
+      "@type": "Book",
+      "name": book.name,
+      "author": { "@type": "Person", "name": authorName },
+      "image": coverAbs,
       "url": pageUrl,
-      "description": desc,
-      "isPartOf": { "@type": "WebSite", "name": "Gratis Pages", "url": DOMAIN },
-      "primaryImageOfPage": { "@type": "ImageObject", "url": coverAbs }
+      "genre": book.genre || "Non-fiction",
+      "workExample": [{
+        "@type": "Book",
+        "bookFormat": "https://schema.org/EBook",
+        "potentialAction": {
+          "@type": "ReadAction",
+          "target": { "@type": "EntryPoint", "urlTemplate": pageUrl, "actionPlatform": ["http://schema.org/DesktopWebPlatform", "http://schema.org/MobileWebPlatform"] }
+        }
+      }]
     }
   ];
-
   document.getElementById("jsonLd").textContent = JSON.stringify(schemas);
 }
 
@@ -466,7 +415,7 @@ if (!slug) {
     .then(function(books) {
       var book = books.find(function(b) { return b.slug === slug; });
       document.getElementById("stateLoading").style.display = "none";
-
+      
       if (!book) {
         document.getElementById("stateNotFound").style.display = "block";
         return;
@@ -476,13 +425,12 @@ if (!slug) {
       var photoPath = stripLeadingSlash(book.photo || "covers/cover.png");
       var coverSrc  = "/" + photoPath;           /* absolute path for <img> */
       var coverAbs  = DOMAIN + "/" + photoPath;  /* full URL for OG/schema  */
-
       var authorName = book.author || "Unknown";
       var genre      = book.genre  || "";
 
       var pageTitle = book.name + " by " + authorName + " \u2014 Free PDF | Gratis Pages";
-      var pageDesc  = "Read \u201C" + book.name + "\u201D by " + authorName +
-                      " for free" + (genre ? " (" + genre + ")" : "") +
+      var pageDesc  = "Read \u201C" + book.name + "\u201D by " + authorName + 
+                      " for free" + (genre ? " (" + genre + ")" : "") + 
                       ". Instant access, no signup, no paywall \u2014 Gratis Pages.";
       var pageUrl   = DOMAIN + "/book.html?slug=" + encodeURIComponent(slug);
 
@@ -507,10 +455,10 @@ if (!slug) {
 
       /* ── Primary SEO meta ── */
       setMeta("metaDesc",     "content", pageDesc);
-      setMeta("metaKeywords", "content",
-        "free pdf " + book.name + ", " + book.name + " free download, " +
-        (authorName !== "Unknown" ? authorName + " free book, " : "") +
-        (genre ? genre + " free pdf, " : "") +
+      setMeta("metaKeywords", "content", 
+        "free pdf " + book.name + ", " + book.name + " free download, " + 
+        (authorName !== "Unknown" ? authorName + " free book, " : "") + 
+        (genre ? genre + " free pdf, " : "") + 
         "free ebook library, gratis pages"
       );
       setMeta("metaCanonical", "href", pageUrl);
