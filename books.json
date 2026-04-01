@@ -198,5 +198,13 @@
     "genre": "Fiction",
     "slug": "we-were-never-meant-to-be-loving-you-was-not-enough",
     "pdfUrl": "pdfs/we-were-never-meant-to-be-loving-you-was-not-enough-1774981894963.pdf"
+  },
+  {
+    "name": "Fatherland",
+    "photo": "covers/fatherland-1775032921272.jpg",
+    "author": "Robert Harris",
+    "genre": "Fiction",
+    "slug": "fatherland",
+    "pdfUrl": "pdfs/fatherland-1775032921272.pdf"
   }
 ]
