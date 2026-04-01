@@ -270,5 +270,13 @@
     "genre": "Fiction",
     "slug": "twisted-lies",
     "pdfUrl": "https://notability.com/g/download/pdf/2uN7L0NjW6ccKYs4R~Myi6/Twisted%20Lies.pdf"
+  },
+  {
+    "name": "Twisted Games",
+    "photo": "covers/twisted-games-1775069946082.png",
+    "author": "Ana Huang",
+    "genre": "Fiction",
+    "slug": "twisted-games",
+    "pdfUrl": "https://notability.com/g/download/pdf/0JwTzywix0LcXa5nW0veDr/Twisted%20Games.pdf"
   }
 ]
