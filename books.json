@@ -208,7 +208,7 @@
     "pdfUrl": "pdfs/fatherland-1775032921272.pdf"
   },
   {
-    "name": "Read People Like a Book: How to Analyze, Understand, and Predict PeopleÃ¢ÂÂs Emotions, Thoughts, Intentions, and Behaviors",
+    "name": "Read People Like a Book: How to Analyze, Understand, and Predict PeopleÃÂ¢ÃÂÃÂs Emotions, Thoughts, Intentions, and Behaviors",
     "photo": "covers/read-people-like-a-book-how-to-analyze-understand-and-predict-peoples-emotions-thoughts-intentions-and-behaviors-1775042548127.jpg",
     "author": "Patrick King",
     "genre": "Psychology",
@@ -238,5 +238,13 @@
     "genre": "History",
     "slug": "the-art-of-war",
     "pdfUrl": "pdfs/the-art-of-war-1775063742953.pdf"
+  },
+  {
+    "name": "How to Talk to Anyone",
+    "photo": "covers/how-to-talk-to-anyone-1775063911317.jpg",
+    "author": "Leil Lowndes",
+    "genre": "Psychology",
+    "slug": "how-to-talk-to-anyone",
+    "pdfUrl": "https://dn790008.ca.archive.org/0/items/HowToTalkAnyone/how%20to%20talk%20anyone.pdf"
   }
 ]
