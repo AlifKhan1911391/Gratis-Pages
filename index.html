@@ -826,38 +826,60 @@ header {
 /* ── NO COVER SVG ── */
 var NO_COVER = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='300'%3E%3Crect fill='%230d0e18' width='200' height='300'/%3E%3Ctext x='50%25' y='50%25' fill='%236b7090' font-family='serif' font-size='13' text-anchor='middle' dy='.35em'%3ENo Cover%3C/text%3E%3C/svg%3E";
 
-var grid      = document.getElementById('bookGrid');
-var countEl   = document.getElementById('bookCount');
-var heroNum   = document.getElementById('heroNumeral');
-
-var allBooks  = [];
-var cardMap   = [];
+var grid    = document.getElementById('bookGrid');
+var countEl = document.getElementById('bookCount');
+var heroNum = document.getElementById('heroNumeral');
+var allBooks = [];
+var cardMap  = [];
 
 /* Empty state node */
 var emptyEl = document.createElement('div');
 emptyEl.className = 'empty-state';
 emptyEl.innerHTML = '<div class="empty-icon">📚</div><p class="empty-msg">No books found</p><p class="empty-sub">Try a different title, author or genre</p>';
 
-/* ── CARD FACTORY with image loading animation ── */
+/* ── HELPERS ── */
+function escapeHtml(str) {
+  return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function updateCount(n) {
+  countEl.textContent = n === 1 ? '1 book' : n + ' books';
+}
+
+/* ── CARD FACTORY ──
+   coverWrap is declared first so img callbacks can safely reference it via closure. */
 function createCard(book, index) {
   var a = document.createElement('a');
   a.className = 'book-card';
   a.style.animationDelay = Math.min(index * 0.045, 0.6) + 's';
-  a.href = 'book.html?slug=' + encodeURIComponent(book.slug);
+  a.href  = 'book.html?slug=' + encodeURIComponent(book.slug);
   a.title = book.name;
   a.setAttribute('aria-label', book.name + ' by ' + book.author);
   a.setAttribute('role', 'listitem');
-  
-  var img = document.createElement('img');
-  img.src = book.photo || '';
-  img.alt = book.name + ' book cover';
-  img.loading = 'lazy';
-  img.onerror = function() { this.src = NO_COVER; this.classList.add('loaded'); coverWrap.classList.add('img-loaded'); };
-  img.onload = function() { this.classList.add('loaded'); coverWrap.classList.add('img-loaded'); };
-  if (img.complete) { img.classList.add('loaded'); coverWrap.classList.add('img-loaded'); }
-  
+
+  /* 1 — cover wrapper (declared before img so callbacks are safe) */
   var coverWrap = document.createElement('div');
   coverWrap.className = 'card-cover-wrap';
+
+  /* 2 — image with skeleton-stop callbacks */
+  var img = document.createElement('img');
+  img.alt     = book.name + ' book cover';
+  img.loading = 'lazy';
+  img.onerror = function() {
+    this.src = NO_COVER;
+    this.classList.add('loaded');
+    coverWrap.classList.add('img-loaded');
+  };
+  img.onload = function() {
+    this.classList.add('loaded');
+    coverWrap.classList.add('img-loaded');
+  };
+  img.src = book.photo || ''; /* set src AFTER handlers so onload fires reliably */
+  if (img.complete) {
+    img.classList.add('loaded');
+    coverWrap.classList.add('img-loaded');
+  }
+
+  /* 3 — assemble cover */
   coverWrap.appendChild(img);
   var gradient = document.createElement('div');
   gradient.className = 'cover-gradient';
@@ -872,28 +894,18 @@ function createCard(book, index) {
     badgeGenre.textContent = book.genre;
     coverWrap.appendChild(badgeGenre);
   }
-  
+
+  /* 4 — card body */
   var body = document.createElement('div');
   body.className = 'card-body';
-  body.innerHTML = `
-    <span class="card-title">${escapeHtml(book.name)}</span>
-    <span class="card-author">by ${escapeHtml(book.author)}</span>
-    <span class="card-cta">Read PDF <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M1 5.5H10M10 5.5L6.5 2M10 5.5L6.5 9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-  `;
-  
+  body.innerHTML =
+    '<span class="card-title">'  + escapeHtml(book.name)   + '</span>' +
+    '<span class="card-author">by ' + escapeHtml(book.author) + '</span>' +
+    '<span class="card-cta">Read PDF <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M1 5.5H10M10 5.5L6.5 2M10 5.5L6.5 9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>';
+
   a.appendChild(coverWrap);
   a.appendChild(body);
   return a;
-}
-
-function escapeHtml(str) {
-  return String(str||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
-}
-
-/* ── COUNT LABEL (books, not titles) ── */
-function updateCount(n) {
-  var label = n === 1 ? '1 book' : n + ' books';
-  countEl.textContent = label;
 }
 
 /* ── RENDER ── */
@@ -903,9 +915,9 @@ function renderBooks(books) {
   grid.innerHTML = '';
   cardMap = books.map(function(book, i) {
     return {
-      book: book,
-      card: createCard(book, i),
-      key: (book.name + ' ' + book.author + ' ' + (book.genre || '')).toLowerCase(),
+      book:  book,
+      card:  createCard(book, i),
+      key:   (book.name + ' ' + book.author + ' ' + (book.genre || '')).toLowerCase(),
       genre: book.genre || ''
     };
   });
@@ -914,35 +926,37 @@ function renderBooks(books) {
   updateCount(books.length);
 }
 
-/* ── FILTER + SEARCH (only search) ── */
+/* ── SEARCH / FILTER ── */
 function applyFilters() {
   var q = (document.getElementById('searchInput').value || '').trim().toLowerCase();
   var visible = 0;
   cardMap.forEach(function(item) {
-    var matchSearch = !q || item.key.indexOf(q) !== -1;
-    var show = matchSearch;
+    var show = !q || item.key.indexOf(q) !== -1;
     item.card.style.display = show ? '' : 'none';
     if (show) visible++;
   });
   updateCount(visible);
-  (visible === 0) ? emptyEl.classList.add('visible') : emptyEl.classList.remove('visible');
+  emptyEl.classList.toggle('visible', visible === 0);
 }
 
-/* ── FETCH ── */
+/* ── FETCH books.json ── */
 fetch('books.json?v=' + Date.now())
-  .then(function(r) { return r.json(); })
+  .then(function(r) {
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    return r.json();
+  })
   .then(renderBooks)
-  .catch(function() {
+  .catch(function(err) {
+    console.error('Library load failed:', err);
     grid.innerHTML = '<div class="loading-state" style="color:#f87171">Failed to load library. Please refresh.</div>';
   });
 
-/* ── SEARCH ── */
+/* ── SEARCH INPUT ── */
 var searchInput = document.getElementById('searchInput');
 var searchClear = document.getElementById('searchClear');
-
 searchInput.addEventListener('input', function(e) {
   applyFilters();
-  e.target.value.length > 0 ? searchClear.classList.add('visible') : searchClear.classList.remove('visible');
+  searchClear.classList.toggle('visible', e.target.value.length > 0);
 });
 searchClear.addEventListener('click', function() {
   searchInput.value = '';
@@ -952,18 +966,32 @@ searchClear.addEventListener('click', function() {
 });
 
 /* ── DRAWER ── */
-var drawer          = document.getElementById('drawer');
-var drawerBackdrop  = document.getElementById('drawerBackdrop');
-var menuBtn         = document.getElementById('menuBtn');
-var drawerClose     = document.getElementById('drawerClose');
+var drawer         = document.getElementById('drawer');
+var drawerBackdrop = document.getElementById('drawerBackdrop');
+var menuBtn        = document.getElementById('menuBtn');
+var drawerClose    = document.getElementById('drawerClose');
 
-function openDrawer()  { drawer.classList.add('open'); drawerBackdrop.classList.add('open'); menuBtn.setAttribute('aria-expanded','true'); document.body.style.overflow = 'hidden'; drawerClose.focus(); }
-function closeDrawer() { drawer.classList.remove('open'); drawerBackdrop.classList.remove('open'); menuBtn.setAttribute('aria-expanded','false'); document.body.style.overflow = ''; menuBtn.focus(); }
+function openDrawer() {
+  drawer.classList.add('open');
+  drawerBackdrop.classList.add('open');
+  menuBtn.setAttribute('aria-expanded', 'true');
+  document.body.style.overflow = 'hidden';
+  drawerClose.focus();
+}
+function closeDrawer() {
+  drawer.classList.remove('open');
+  drawerBackdrop.classList.remove('open');
+  menuBtn.setAttribute('aria-expanded', 'false');
+  document.body.style.overflow = '';
+  menuBtn.focus();
+}
 
 menuBtn.addEventListener('click', openDrawer);
 drawerClose.addEventListener('click', closeDrawer);
 drawerBackdrop.addEventListener('click', closeDrawer);
-document.addEventListener('keydown', function(e) { if (e.key === 'Escape' && drawer.classList.contains('open')) closeDrawer(); });
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape' && drawer.classList.contains('open')) closeDrawer();
+});
 
 /* ── REQUEST FORM (Formspree) ── */
 var requestForm = document.getElementById('requestForm');
@@ -971,42 +999,15 @@ var formSuccess = document.getElementById('formSuccess');
 var formError   = document.getElementById('formError');
 var submitBtn   = document.getElementById('submitBtn');
 
-/* ── COOKIE CONSENT ── */
-(function() {
-  var banner  = document.getElementById('cookieBanner');
-  var accept  = document.getElementById('cookieAccept');
-  var decline = document.getElementById('cookieDecline');
-
-  if (localStorage.getItem('gp_cookie_consent')) return; /* already decided */
-
-  /* Show after a short delay so it doesn't compete with page load */
-  setTimeout(function() { banner.classList.add('visible'); }, 1200);
-
-  function hideBanner() {
-    banner.classList.remove('visible');
-    setTimeout(function() { banner.style.display = 'none'; }, 500);
-  }
-
-  accept.addEventListener('click', function() {
-    localStorage.setItem('gp_cookie_consent', 'accepted');
-    hideBanner();
-    /* TODO: initialise Google Ads / Analytics here once consent is given */
-  });
-
-  decline.addEventListener('click', function() {
-    localStorage.setItem('gp_cookie_consent', 'declined');
-    hideBanner();
-  });
-})();
-
+requestForm.addEventListener('submit', function(e) {
   e.preventDefault();
   formSuccess.classList.remove('show');
   formError.classList.remove('show');
   submitBtn.disabled = true;
   submitBtn.textContent = 'Sending…';
   fetch(requestForm.action, {
-    method: 'POST',
-    body: new FormData(requestForm),
+    method:  'POST',
+    body:    new FormData(requestForm),
     headers: { 'Accept': 'application/json' }
   })
   .then(function(res) {
@@ -1019,6 +1020,30 @@ var submitBtn   = document.getElementById('submitBtn');
     submitBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7H13M13 7L8 2M13 7L8 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg> Send Request';
   });
 });
+
+/* ── COOKIE CONSENT ── */
+(function() {
+  if (localStorage.getItem('gp_cookie_consent')) return; /* already decided */
+  var banner  = document.getElementById('cookieBanner');
+  var accept  = document.getElementById('cookieAccept');
+  var decline = document.getElementById('cookieDecline');
+
+  setTimeout(function() { banner.classList.add('visible'); }, 1200);
+
+  function hideBanner() {
+    banner.classList.remove('visible');
+    setTimeout(function() { banner.style.display = 'none'; }, 500);
+  }
+  accept.addEventListener('click', function() {
+    localStorage.setItem('gp_cookie_consent', 'accepted');
+    hideBanner();
+    /* TODO: init Google Ads / Analytics here after consent */
+  });
+  decline.addEventListener('click', function() {
+    localStorage.setItem('gp_cookie_consent', 'declined');
+    hideBanner();
+  });
+})();
 </script>
 </body>
 </html>
