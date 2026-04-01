@@ -5,6 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <meta name="theme-color" content="#0c0d16" />
 
+<!-- ═══ FAVICON ═══ -->
+<link rel="icon" href="/logo.png" type="image/png" />
+<link rel="shortcut icon" href="/logo.png" type="image/png" />
+<link rel="apple-touch-icon" href="/logo.png" />
+
 <!-- ═══ PRIMARY SEO ═══ -->
 <title>Gratis Pages — Free PDF Books Library | Read Classic Books Online</title>
 <meta name="description" content="Read and download free PDF books on Gratis Pages. Instant access to classics like Rich Dad Poor Dad, The 48 Laws of Power, Atomic Habits, Think and Grow Rich, and more. No signup required." />
@@ -18,7 +23,7 @@
 <meta property="og:url" content="https://gratispages.netlify.app/" />
 <meta property="og:title" content="Gratis Pages — Free PDF Books Library" />
 <meta property="og:description" content="Read and download free PDF books instantly. No signup. No paywall. Just books that matter." />
-<meta property="og:image" content="https://gratispages.netlify.app/covers/cover.png" />
+<meta property="og:image" content="https://gratispages.netlify.app/logo.png" />
 <meta property="og:site_name" content="Gratis Pages" />
 <meta property="og:locale" content="en_US" />
 
@@ -26,7 +31,7 @@
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Gratis Pages — Free PDF Books Library" />
 <meta name="twitter:description" content="Read and download free PDF books instantly. No signup. No paywall." />
-<meta name="twitter:image" content="https://gratispages.netlify.app/covers/cover.png" />
+<meta name="twitter:image" content="https://gratispages.netlify.app/logo.png" />
 
 <!-- ═══ JSON-LD SCHEMA ═══ -->
 <script type="application/ld+json">
@@ -375,6 +380,11 @@ header {
   50% { background-color: #1a1c2a; }
   100% { background-color: #0d0e18; }
 }
+/* Stop skeleton once image is loaded */
+.card-cover-wrap.img-loaded {
+  animation: none;
+  background: #0d0e18;
+}
 @keyframes imageFadeIn {
   0% { opacity: 0; transform: scale(0.98); }
   100% { opacity: 1; transform: scale(1); }
@@ -462,7 +472,7 @@ header {
   padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border); flex-shrink: 0;
 }
 
-.drawer-title { font-family: var(--serif); font-size: 1.15rem; font-weight: 600; color: var(--cream); }
+.drawer-title { display: flex; align-items: baseline; line-height: 1; }
 
 .drawer-close {
   background: none; border: none; color: var(--muted);
@@ -577,8 +587,81 @@ header {
 .form-success.show { display: block; background: rgba(34,197,94,0.08); color: #4ade80; border: 1px solid rgba(34,197,94,0.2); }
 .form-error.show { display: block; background: rgba(239,68,68,0.08); color: #f87171; border: 1px solid rgba(239,68,68,0.2); }
 
-/* ─── FOOTER (empty except attribution in drawer) ─── */
-footer { display: none; }
+/* ─── COOKIE CONSENT ─── */
+.cookie-banner {
+  position: fixed;
+  bottom: 1.25rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(120%);
+  z-index: 1000;
+  width: min(560px, calc(100vw - 2rem));
+  background: #111219;
+  border: 1px solid rgba(232,168,56,0.2);
+  border-radius: 16px;
+  padding: 1.1rem 1.35rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.6), 0 0 0 1px rgba(232,168,56,0.06);
+  backdrop-filter: blur(16px);
+  transition: transform 0.48s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.48s ease;
+  opacity: 0;
+}
+.cookie-banner.visible {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+.cookie-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+.cookie-text {
+  flex: 1;
+  font-size: 0.8rem;
+  color: var(--muted);
+  line-height: 1.55;
+}
+.cookie-text strong { color: var(--text); }
+.cookie-text a { color: var(--gold); text-decoration: none; }
+.cookie-text a:hover { text-decoration: underline; }
+.cookie-actions {
+  display: flex;
+  gap: 0.55rem;
+  flex-shrink: 0;
+}
+.cookie-btn-accept {
+  background: var(--gold);
+  color: #09090f;
+  border: none;
+  border-radius: 8px;
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: var(--t);
+  white-space: nowrap;
+}
+.cookie-btn-accept:hover { background: #f0b840; transform: translateY(-1px); }
+.cookie-btn-decline {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--muted);
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  padding: 0.5rem 0.85rem;
+  cursor: pointer;
+  transition: var(--t);
+  white-space: nowrap;
+}
+.cookie-btn-decline:hover { border-color: var(--border-h); color: var(--text); }
+@media (max-width: 560px) {
+  .cookie-banner { flex-direction: column; align-items: flex-start; gap: 0.75rem; bottom: 0.75rem; border-radius: 14px; }
+  .cookie-actions { width: 100%; }
+  .cookie-btn-accept, .cookie-btn-decline { flex: 1; text-align: center; }
+}
+
 
 /* ─── ANIMATIONS ─── */
 @keyframes fadeUp {
@@ -656,13 +739,25 @@ footer { display: none; }
   </div>
 </main>
 
+<!-- COOKIE CONSENT BANNER -->
+<div class="cookie-banner" id="cookieBanner" role="dialog" aria-live="polite" aria-label="Cookie consent">
+  <span class="cookie-icon">🍪</span>
+  <p class="cookie-text">
+    <strong>We use cookies</strong> to personalise content and ads, and to analyse our traffic. By clicking <em>Accept</em>, you consent to our use of cookies for Google Ads and analytics.
+  </p>
+  <div class="cookie-actions">
+    <button class="cookie-btn-decline" id="cookieDecline">Decline</button>
+    <button class="cookie-btn-accept" id="cookieAccept">Accept Cookies</button>
+  </div>
+</div>
+
 <!-- DRAWER BACKDROP -->
 <div class="drawer-backdrop" id="drawerBackdrop"></div>
 
 <!-- SIDE DRAWER (reordered: request form first, then developer bio, then copyright) -->
 <aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Site menu">
   <div class="drawer-header">
-    <span class="drawer-title">Gratis Pages</span>
+    <span class="drawer-title"><span class="logo-g" style="font-size:1.2rem">Gratis</span><span class="logo-p" style="font-size:1.2rem;margin-left:0.28rem">Pages</span></span>
     <button class="drawer-close" id="drawerClose" aria-label="Close menu">&times;</button>
   </div>
   <div class="drawer-body">
@@ -706,19 +801,17 @@ footer { display: none; }
       <p class="drawer-section-label">About Developer</p>
       <div class="bio-card">
         <div class="bio-name">Mahadi Islam Alif</div>
-        <div class="bio-title">Web Developer · Entrepreneur · Researcher</div>
+        <div class="bio-title">Web Developer · Researcher · Lifelong Learner</div>
         <div class="bio-text">
-          Passionate web developer from Bangladesh, dedicated to clean code and impactful digital solutions. Entrepreneur behind <strong>Poedagar 613</strong> — a bootstrapped e‑commerce venture that taught invaluable lessons in marketing and resilience.
+          Passionate web developer from Bangladesh, dedicated to clean, efficient, and visually engaging digital solutions. I blend technical precision with creative design to turn ideas into functional products. My long‑term vision: financial freedom through technology while contributing to meaningful projects.
         </div>
         <div class="bio-highlight">
           📄 Published researcher: <strong>AI-Assisted Manga Creation</strong> (Zenodo, 2026) and <strong>Spring-Powered V8 Engine Model</strong> (engrXiv, 2026).<br>
-          📜 Certifications in Digital Marketing (Google), Artificial Intelligence (Microsoft), Python (Saylor), and Prompt Engineering.<br>
-          🧠 Co-founder of <strong>Nika Wealth</strong> – an educational Instagram initiative exploring wealth psychology.
+          📜 <strong>Google</strong>: Google Analytics 4, Ads Display, Conversion Optimization, Ads Video.<br>
+          🤖 <strong>Microsoft</strong>: 5× AI certifications incl. Copilot Chat &amp; Prompt Engineering (with Simplilearn).<br>
+          💻 <strong>freeCodeCamp</strong>: Responsive Web Design (300+ hrs) · <strong>Anthropic</strong>: Claude Code in Action.
         </div>
-        <div class="bio-text">
-          I blend technical precision with creative design to turn ideas into functional products. My long‑term vision: financial freedom through technology while contributing to meaningful projects.
-        </div>
-        <a href="https://mahadiislamalif.netlify.app" class="bio-link" target="_blank" rel="noopener">Full portfolio & credentials →</a>
+        <a href="https://mahadiislamalif.netlify.app" class="bio-link" target="_blank" rel="noopener">Full portfolio &amp; credentials →</a>
       </div>
     </div>
 
@@ -759,9 +852,9 @@ function createCard(book, index) {
   img.src = book.photo || '';
   img.alt = book.name + ' book cover';
   img.loading = 'lazy';
-  img.onerror = function() { this.src = NO_COVER; };
-  img.onload = function() { this.classList.add('loaded'); };
-  if (img.complete) img.classList.add('loaded');
+  img.onerror = function() { this.src = NO_COVER; this.classList.add('loaded'); coverWrap.classList.add('img-loaded'); };
+  img.onload = function() { this.classList.add('loaded'); coverWrap.classList.add('img-loaded'); };
+  if (img.complete) { img.classList.add('loaded'); coverWrap.classList.add('img-loaded'); }
   
   var coverWrap = document.createElement('div');
   coverWrap.className = 'card-cover-wrap';
@@ -878,7 +971,34 @@ var formSuccess = document.getElementById('formSuccess');
 var formError   = document.getElementById('formError');
 var submitBtn   = document.getElementById('submitBtn');
 
-requestForm.addEventListener('submit', function(e) {
+/* ── COOKIE CONSENT ── */
+(function() {
+  var banner  = document.getElementById('cookieBanner');
+  var accept  = document.getElementById('cookieAccept');
+  var decline = document.getElementById('cookieDecline');
+
+  if (localStorage.getItem('gp_cookie_consent')) return; /* already decided */
+
+  /* Show after a short delay so it doesn't compete with page load */
+  setTimeout(function() { banner.classList.add('visible'); }, 1200);
+
+  function hideBanner() {
+    banner.classList.remove('visible');
+    setTimeout(function() { banner.style.display = 'none'; }, 500);
+  }
+
+  accept.addEventListener('click', function() {
+    localStorage.setItem('gp_cookie_consent', 'accepted');
+    hideBanner();
+    /* TODO: initialise Google Ads / Analytics here once consent is given */
+  });
+
+  decline.addEventListener('click', function() {
+    localStorage.setItem('gp_cookie_consent', 'declined');
+    hideBanner();
+  });
+})();
+
   e.preventDefault();
   formSuccess.classList.remove('show');
   formError.classList.remove('show');
