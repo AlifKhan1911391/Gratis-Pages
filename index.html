@@ -5,14 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <meta name="theme-color" content="#0c0d16" />
   <!-- Favicon -->
-<link rel="icon" type="image/png" href="/logo.png">
-<link rel="apple-touch-icon" href="/logo.png">
-<link rel="shortcut icon" href="/logo.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/logo.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/logo.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/logo.png">
+<link rel="manifest" href="/site.webmanifest">
 
 <!-- ═══ PRIMARY SEO ═══ -->
 <title>Gratis Pages — Free PDF Books Library | Read Classic Books Online</title>
-<meta name="description" content="Read and download free PDF books on Gratis Pages. Instant access to classics like Rich Dad Poor Dad, The 48 Laws of Power, Atomic Habits, Think and Grow Rich, and more. No signup required." />
-<meta name="keywords" content="free pdf books, free ebooks, read books online free, free book library, classic books pdf, self help books free, free pdf download" />
+<meta name="description" content="Read and download free PDF books on Gratis Pages. Instant access to classic self-help, finance, philosophy, and productivity books. No signup required." />
+<meta name="keywords" content="free pdf books, free ebook library, read books online, classic books, self-help books, finance books, productivity books, no signup book library" />
 <meta name="robots" content="index, follow" />
 <meta name="author" content="Mahadi Islam Alif" />
 <link rel="canonical" href="https://gratispages.netlify.app/" />
@@ -23,14 +24,18 @@
 <meta property="og:title" content="Gratis Pages — Free PDF Books Library" />
 <meta property="og:description" content="Read and download free PDF books instantly. No signup. No paywall. Just books that matter." />
 <meta property="og:image" content="https://gratispages.netlify.app/logo.png" />
+<meta property="og:image:width"  content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt"    content="Gratis Pages — Free PDF Books Library" />
 <meta property="og:site_name" content="Gratis Pages" />
 <meta property="og:locale" content="en_US" />
 
 <!-- ═══ TWITTER CARD ═══ -->
-<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="Gratis Pages — Free PDF Books Library" />
 <meta name="twitter:description" content="Read and download free PDF books instantly. No signup. No paywall." />
 <meta name="twitter:image" content="https://gratispages.netlify.app/logo.png" />
+<meta name="twitter:image:alt" content="Gratis Pages logo" />
 
 <!-- ═══ JSON-LD SCHEMA ═══ -->
 <script type="application/ld+json">
@@ -85,6 +90,17 @@
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
+
+/* Screen-reader only — visually hidden but indexed by search engines */
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
 
 body {
   background: var(--bg);
@@ -606,10 +622,11 @@ footer { display: none; }
   <div class="hero-inner">
     <div class="hero-left">
       <p class="hero-eyebrow">Free for everyone, always</p>
-      <h1 class="hero-title">
+      <h1 class="sr-only">Gratis Pages — Free PDF Books Library</h1>
+      <h2 class="hero-title">
         Books that<br>
         <span class="line2">change lives.</span>
-      </h1>
+      </h2>
       <p class="hero-sub">A curated collection of classics and bestsellers — completely free. No signup, no paywall.</p>
       <div class="hero-search">
         <svg class="hero-search-icon" width="16" height="16" viewBox="0 0 15 15" fill="none">
@@ -621,7 +638,7 @@ footer { display: none; }
       </div>
     </div>
     <div class="hero-right">
-      <div class="hero-numeral" id="heroNumeral" aria-hidden="true">—</div>
+      <div class="hero-numeral" id="heroNumeral" aria-hidden="true">0</div>
       <div class="hero-numeral-label">titles &amp; counting</div>
     </div>
   </div>
@@ -695,7 +712,7 @@ footer { display: none; }
         <div class="bio-highlight">
           📄 Published researcher: <strong>AI-Assisted Manga Creation</strong> (Zenodo, 2026) and <strong>Spring-Powered V8 Engine Model</strong> (engrXiv, 2026).<br>
           📜 Certifications in Digital Marketing (Google), Artificial Intelligence (Microsoft), Web Development (FreeCodeCamp) & many more.<br>
-          🧠 Founder of <a class="bio-link" href="blazemanga.netlify.app">Blaze Manga</a> – a project to generate manga with Artificial Intelligence for non-manga artists.
+          🧠 Founder of <a class="bio-link" href="https://blazemanga.netlify.app" target="_blank" rel="noopener">Blaze Manga</a> – a project to generate manga with Artificial Intelligence for non-manga artists.
         </div>
         <div class="bio-text">
           I blend technical precision with creative design to turn ideas into functional products. My long‑term vision: financial freedom through technology while contributing to meaningful projects.
@@ -738,7 +755,7 @@ function createCard(book, index) {
   a.setAttribute('role', 'listitem');
   a.innerHTML =
     '<div class="card-cover-wrap">' +
-      '<img src="' + (book.photo || '') + '" alt="' + book.name + ' book cover" loading="lazy" onerror="this.src=\'' + NO_COVER + '\'"/>' +
+      '<img src="' + (book.photo || '') + '" width="200" height="300" alt="' + book.name + ' book cover" loading="lazy" onerror="this.src=\'' + NO_COVER + '\'"/>' +
       '<div class="cover-gradient"></div>' +
       '<span class="badge-free">Free</span>' +
       (book.genre ? '<span class="badge-genre">' + book.genre + '</span>' : '') +
@@ -787,12 +804,24 @@ function applyFilters() {
   });
   updateCount(visible);
   (visible === 0) ? emptyEl.classList.add('visible') : emptyEl.classList.remove('visible');
+  /* Update URL so search is bookmarkable, shareable, and survives Back button */
+  history.replaceState(null, '', q ? '?search=' + encodeURIComponent(q) : window.location.pathname);
 }
 
 /* ── FETCH ── */
-fetch('books.json?v=' + Date.now())
+fetch('books.json?v=1.0.0')
   .then(function(r) { return r.json(); })
-  .then(renderBooks)
+  .then(function(books) {
+    renderBooks(books);
+    /* ── URL SEARCH PARAM (for JSON-LD potentialAction & shared links) ── */
+    var params = new URLSearchParams(window.location.search);
+    var query  = params.get('search');
+    if (query) {
+      searchInput.value = query;
+      searchClear.classList.add('visible');
+      applyFilters();
+    }
+  })
   .catch(function() {
     grid.innerHTML = '<div class="loading-state" style="color:#f87171">Failed to load library. Please refresh.</div>';
   });
@@ -803,7 +832,7 @@ var searchClear = document.getElementById('searchClear');
 
 searchInput.addEventListener('input', function(e) {
   applyFilters();
-  e.target.value.length > 0 ? searchClear.classList.add('visible') : searchClear.classList.remove('visible');
+  e.target.value.trim().length > 0 ? searchClear.classList.add('visible') : searchClear.classList.remove('visible');
 });
 searchClear.addEventListener('click', function() {
   searchInput.value = '';
