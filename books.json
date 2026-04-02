@@ -294,5 +294,13 @@
     "genre": "Fiction",
     "slug": "the-book-thief",
     "pdfUrl": "https://cdnsm5-ss3.sharpschool.com/UserFiles/Servers/Server_4204286/Image/Grade9GT--TheBookThiefMarkusZusak.pdf"
+  },
+  {
+    "name": "The Simple Path to Wealth: Your Road Map to Financial Independence and a Rich, Free Life",
+    "photo": "covers/the-simple-path-to-wealth-your-road-map-to-financial-independence-and-a-rich-free-life-1775105081616.jpg",
+    "author": "J. L. Collins",
+    "genre": "Finance",
+    "slug": "the-simple-path-to-wealth-your-road-map-to-financial-independence-and-a-rich-free-life",
+    "pdfUrl": "pdfs/the-simple-path-to-wealth-your-road-map-to-financial-independence-and-a-rich-free-life-1775105081616.pdf"
   }
 ]
