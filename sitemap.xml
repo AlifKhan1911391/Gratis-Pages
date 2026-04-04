@@ -258,4 +258,10 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://gratispages.netlify.app/book.html?slug=the-book-the-ultimate-guide-to-rebuilding-a-civilization</loc>
+    <lastmod>2026-04-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>
