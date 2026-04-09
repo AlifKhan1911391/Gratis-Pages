@@ -208,7 +208,7 @@
     "pdfUrl": "pdfs/fatherland-1775032921272.pdf"
   },
   {
-    "name": "Read People Like a Book: How to Analyze, Understand, and Predict PeopleÃ¢ÂÂs Emotions, Thoughts, Intentions, and Behaviors",
+    "name": "Read People Like a Book: How to Analyze, Understand, and Predict PeopleÃÂ¢ÃÂÃÂs Emotions, Thoughts, Intentions, and Behaviors",
     "photo": "covers/read-people-like-a-book-how-to-analyze-understand-and-predict-peoples-emotions-thoughts-intentions-and-behaviors-1775042548127.jpg",
     "author": "Patrick King",
     "genre": "Psychology",
@@ -350,5 +350,13 @@
     "genre": "Psychology",
     "slug": "the-50th-law",
     "pdfUrl": "https://dn790000.ca.archive.org/0/items/the48lawsofpower_201912/The_50th_Law_-_Robert_Greene.pdf"
+  },
+  {
+    "name": "1984",
+    "photo": "covers/1984-1775711439085.jpg",
+    "author": "George Orwell",
+    "genre": "",
+    "slug": "1984",
+    "pdfUrl": "https://ia800900.us.archive.org/17/items/GeorgeOrwell1984_201701/George%20Orwell%20-%201984.pdf"
   }
 ]
